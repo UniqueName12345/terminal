@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Terminal Personas</title>
+</head>
+<body>
+    <div class="terminal">
+        <div class="terminal-titlebar">
+            <div class="window-buttons">
+                <div class="window-button close"></div>
+                <div class="window-button minimize"></div>
+                <div class="window-button maximize"></div>
+            </div>
+            <div class="terminal-title">Terminal - <span id="current-tab-title">Casual</span></div>
+        </div>
+        <div class="terminal-tabs">
+            <div class="tab active" data-tab="casual">Casual</div>
+            <div class="tab" data-tab="furry">Furry</div>
+            <div class="tab" data-tab="professional">Professional</div>
+        </div>
+        <div class="terminal-content">
+            <div id="casual-terminal" class="tab-content active">
+                <div id="casual-output" class="output">
+                    <div class="line">Welcome to Ethan Johnathan's Terminal</div>
+                    <div class="line">Type 'help' for available commands</div>
+                    <div class="line">Current Time: <span id="casual-time"></span></div>
+                </div>
+                <div class="input-line">
+                    <span class="prompt">guest@ethan:~$</span>
+                    <input type="text" class="command-input" data-terminal="casual" autofocus spellcheck="false">
+                </div>
+            </div>
+            <div id="furry-terminal" class="tab-content">
+                <div id="furry-output" class="output">
+                    <div class="line">*beep boop* Welcome to Pixel's Terminal!</div>
+                    <div class="line">Type 'help' for available commands</div>
+                    <div class="line">Current Time: <span id="furry-time"></span></div>
+                </div>
+                <div class="input-line">
+                    <span class="prompt">guest@pixel:~$</span>
+                    <input type="text" class="command-input" data-terminal="furry" spellcheck="false">
+                </div>
+            </div>
+            <div id="professional-terminal" class="tab-content">
+                <div id="professional-output" class="output">
+                    <div class="line">Welcome to Ethan JRS's Professional Terminal</div>
+                    <div class="line">Type 'help' for available commands</div>
+                    <div class="line">Current Time: <span id="professional-time"></span></div>
+                </div>
+                <div class="input-line">
+                    <span class="prompt">guest@ethanjrs:~$</span>
+                    <input type="text" class="command-input" data-terminal="professional" spellcheck="false">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-keyboard">
+        <div class="command-suggestions"></div>
+        <div class="keyboard-row">
+            <button class="key">help</button>
+            <button class="key">clear</button>
+            <button class="key">ls</button>
+            <button class="key">cd</button>
+            <button class="key">pwd</button>
+        </div>
+        <div class="keyboard-row">
+            <button class="key">chat</button>
+            <button class="key">img</button>
+            <button class="key">music</button>
+            <button class="key">about</button>
+        </div>
+        <div class="keyboard-row">
+            <button class="key">DA</button>
+            <button class="key">E9</button>
+            <button class="key">FA</button>
+            <button class="key wide">verify yes</button>
+        </div>
+        <div class="keyboard-row">
+            <button class="key wide">"</button>
+            <button class="key extra-wide">Space</button>
+            <button class="key wide">Enter</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
