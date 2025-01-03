@@ -615,10 +615,10 @@ img SB "verify no"    - If you are under 18`;
                 }
 
                 // Handle channel command first
-                const beforeQuotes = args.split('"')[0].trim();
-                if (beforeQuotes === 'channel') {
-                    const handle = args.split(' ').slice(1)[0];
-                    if (handle?.startsWith('@')) {
+                if (args.startsWith('channel ')) {
+                    const channelMatch = args.match(/channel\s+"(@[^"]+)"/);
+                    if (channelMatch) {
+                        const handle = channelMatch[1];
                         window.open(`https://youtube.com/${handle}`, '_blank');
                         return `Opening ${handle}'s YouTube channel...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                     }
@@ -1127,10 +1127,10 @@ img E9 "verify no"    - If you are under 18`;
                 }
 
                 // Handle channel command first
-                const beforeQuotes = args.split('"')[0].trim();
-                if (beforeQuotes === 'channel') {
-                    const handle = args.split(' ').slice(1)[0];
-                    if (handle?.startsWith('@')) {
+                if (args.startsWith('channel ')) {
+                    const channelMatch = args.match(/channel\s+"(@[^"]+)"/);
+                    if (channelMatch) {
+                        const handle = channelMatch[1];
                         window.open(`https://youtube.com/${handle}`, '_blank');
                         return `*happy beeping* Opening ${handle}'s YouTube channel! >w<\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                     }
