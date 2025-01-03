@@ -278,7 +278,6 @@ const terminals = {
     cat      - Read a text file (usage: cat <filename>)
     pwd      - Print working directory
     neofetch - Display system information
-    mystuff  - Switch to my personal page (Warning: no terminal access there!)
     alias    - Manage aliases (try: "alias help")`,
             'about': () => `Name: Ethan Johnathan (not my real last name but)
 Age: 15
@@ -689,20 +688,16 @@ img SB "verify no"    - If you are under 18`;
                 const lastMessageTime = currentTime.toLocaleString();
                 return `
     ⠀⠀⠀⠀⣀⣤⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Casual
-    ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀    -----------
-    ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀    Name: Ethan
+    ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀    -----------
+    ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀    Name: Ethan
     ⢸⣿⣿⣿⠟⠋⠉⠉⠙⠻⣿⣿⣿⣿⣿⣇⠀⠀⠀    Terminal: Casual
-    ⢸⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⠀⠀⠀    Last Message: ${lastMessageTime}
-    ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⠀⠀⠀    
+    ⢸⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⠀⠀⠀    Last Message: ${lastMessageTime}
+    ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⠀⠀⠀    
     ⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⡿⠀⠀⠀    "Programming and technology
     ⠘⣿⣿⣿⣧⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⣿⠃⠀⠀⠀     enthusiast, always learning!"
     ⠀⠹⣿⣿⣿⣷⣤⣤⣴⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀
     ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀
-    ⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠟⠛⠉⠀⠀⠀⠀⠀⠀⠀`;
-            },
-            'mystuff': () => {
-                window.location.href = '/casualstuff/';
-                return 'Switching to my personal page... Note that the terminal commands won\'t work there!';
+    ⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠟⠛⠉⠀⠀⠀⠀⠀⠀⠀`;
             },
         },
         chatMode: false,
@@ -773,14 +768,13 @@ Come back when you're ready to use actual commands and treat me with respect.
     interests - My furry interests
     question  - Ask me a question! (try: "question help")
     img       - Search for images (usage: img [website] "[search]")
-               Websites: DA (DeviantArt), AI (AI Generator), FA (FurAffinity), E6 (e621, 18+ only), or blank for Google
+               Websites: DA (DeviantArt), AI (AI Generator), SB (Safebooru, 18+ only), or blank for Google
     youtube   - Open YouTube (usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]")
     ls        - List files in current directory
     cd        - Change directory (usage: cd <path>)
     cat       - Read a text file (usage: cat <filename>)
     pwd       - Show current directory
     neofetch  - Display system information
-    mystuff   - Switch to my personal page (Warning: no terminal access there!)
     alias     - Manage aliases (try: "alias help")`,
             'about': () => `*happy protogen noises*
 Name: Pixel
@@ -999,21 +993,17 @@ Your question: "${input}"`;
 
 Websites:
   DA = DeviantArt (add -ai to exclude AI art)
-  FA = FurAffinity (general search)
-  E9 = E926 (safe for work)
-  E6 = That other site ;3
+  FA = FurAffinity (18+ only!)
+  E9 = E926 (18+ only!)
   (blank) = Google Images
 
 Example: img DA "cute protogen"
          img DA "cute protogen -ai" (excludes AI art)
-         img FA "cute protogen"
          img "cute protogen" (uses Google)
 
 *concerned beeping* Note about DA: They do allow AI art, but it's tagged! >:c
 Add -ai to your search to exclude AI-generated content! >w<
-I appreciate artists properly tagging their work! *happy LED patterns*
-
-*whispers* The spicier site works just like E9... if you know what I mean >w<`;
+I appreciate artists properly tagging their work! *happy LED patterns*`;
                     } else {
                         return `*helpful beeping* Usage: img [website] "[search]"
 
@@ -1222,19 +1212,15 @@ img E9 "verify no"    - If you are under 18`;
                 const lastMessageTime = currentTime.toLocaleString();
                 return `
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Furry
-    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀    -----------
-    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
-    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
-    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
-    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
-    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
-    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
-    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
-    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
-            },
-            'mystuff': () => {
-                window.location.href = '/furrystuff/';
-                return '*excited beeping* Taking you to my personal page! Note that my terminal commands won\'t work there though >w<';
+    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀    -----------
+    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
+    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
+    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
+    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
+    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
             },
         },
         chatMode: false,
@@ -1310,7 +1296,6 @@ Please reflect on how to properly treat your local protogen...
     cat      - Read a text file (usage: cat <filename>)
     pwd      - Print working directory
     neofetch - Display system information
-    mystuff  - Switch to my personal page (Warning: no terminal access there)
     alias    - Manage aliases (try: "alias help")`,
             'about': () => `Professional Profile:
 Name: Ethan JRS
@@ -1383,16 +1368,16 @@ For game development inquiries and professional work.`,
                 const lastMessageTime = currentTime.toLocaleString();
                 return `
     ⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣤⣶⣶⣶⣶⣤⣤⣄⡀⠀⠀⠀⠀⠀⠀    Guest@Professional
-    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀    -----------------
-    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Professional
-    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Professional
-    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
-    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
-    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    "Efficiency and 
-    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    professionalism in code."
-    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
-    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀⠀⠀
-    ⠀⠀⠀⠀⠀⠈⠉⠛⠛⠛⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀`;
+    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀    -----------------
+    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Professional
+    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Professional
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    "Efficiency and 
+    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    professionalism in code."
+    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
+    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠈⠉⠛⠛⠛⠛⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀`;
             },
             'alias': (args) => {
                 if (!args.length || args[0] === 'help') {
@@ -1424,10 +1409,6 @@ For game development inquiries and professional work.`,
                 return Object.entries(aliases.professional)
                     .map(([alias, command]) => `${alias} -> ${command}`)
                     .join('\n') || 'No aliases defined';
-            },
-            'mystuff': () => {
-                window.location.href = '/professionalstuff/';
-                return 'Redirecting to my professional portfolio page. Please note that terminal functionality will not be available there.';
             },
         },
         notFoundMessage: (cmd) => `Error: Command '${cmd}' not recognized. Please use 'help' to view available commands.`
@@ -1491,213 +1472,76 @@ tabs.forEach(tab => {
     });
 });
 
-// Handle commands for each terminal
-document.querySelectorAll('.command-input').forEach(input => {
-    input.addEventListener('keypress', async function(e) {
-        if (e.key === 'Enter') {
-            const terminalType = this.getAttribute('data-terminal');
-            const terminal = terminals[terminalType];
-            const commandLine = this.value.trim();
-            const [rawCommand, ...args] = commandLine.toLowerCase().split(' ');
-            
-            // Add command to history if not empty and different from last command
-            if (commandLine && (commandHistory[terminalType].history.length === 0 || 
-                commandHistory[terminalType].history[commandHistory[terminalType].history.length - 1] !== commandLine)) {
-                commandHistory[terminalType].history.push(commandLine);
-            }
-            commandHistory[terminalType].position = commandHistory[terminalType].history.length;
+// Initialize command inputs when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize mobile keyboard
+    initMobileKeyboard();
 
-            // Check if command is an alias
-            const command = aliases[terminalType][rawCommand] || rawCommand;
-            
-            // Don't process anything if terminal is blocked
-            if (reverseShellState.blockedTerminals.has(terminalType)) {
-                if (terminalType === 'casual') {
-                    addLine(terminal.outputElement, `Access denied. This terminal has been permanently blocked due to previous unauthorized access.`);
-                } else if (terminalType === 'furry') {
-                    addLine(terminal.outputElement, `*angry beeping* ACCESS DENIED! You've been blocked for breaching my trust! >:(`);
+    // Initialize command inputs
+    document.querySelectorAll('.command-input').forEach(input => {
+        input.addEventListener('keypress', async function(e) {
+            if (e.key === 'Enter') {
+                const terminalType = this.getAttribute('data-terminal');
+                const terminal = terminals[terminalType];
+                const commandLine = this.value.trim();
+                const [rawCommand, ...args] = commandLine.toLowerCase().split(' ');
+                
+                // Add command to history if not empty and different from last command
+                if (commandLine && (commandHistory[terminalType].history.length === 0 || 
+                    commandHistory[terminalType].history[commandHistory[terminalType].history.length - 1] !== commandLine)) {
+                    commandHistory[terminalType].history.push(commandLine);
                 }
+                commandHistory[terminalType].position = commandHistory[terminalType].history.length;
+
+                // Check if command is an alias
+                const command = aliases[terminalType]?.[rawCommand] || rawCommand;
+                
+                // Clear input
                 this.value = '';
-                return;
-            }
-            
-            // Handle reverse shell commands
-            if (reverseShellState.activeShell) {
-                if (command === 'reverse-shell' && args[0] === 'exit') {
-                    // Block the terminal we hacked into
-                    reverseShellState.blockedTerminals.add(reverseShellState.activeShell);
-                    const blockedPersona = reverseShellState.activeShell;
-                    reverseShellState.activeShell = null;
-                    reverseShellState.shellCurrentPath = '/';
-                    
-                    if (blockedPersona === 'casual') {
-                        addLine(terminals[blockedPersona].outputElement, 
-                            `YOU WENT THROUGH MY PRIVATE FILES?!\nI trusted you...\nThis terminal has been permanently blocked.`);
-                    } else if (blockedPersona === 'furry') {
-                        addLine(terminals[blockedPersona].outputElement,
-                            `*angry protogen noises*\nYOU SAW MY PRIVATE ART?! >:(\nI'm blocking you forever! *sad beeping*`);
+                
+                // Don't process anything if terminal is blocked
+                if (reverseShellState.blockedTerminals.has(terminalType)) {
+                    if (terminalType === 'casual') {
+                        addLine(terminal.outputElement, `Access denied. This terminal has been permanently blocked due to previous unauthorized access.`);
+                    } else if (terminalType === 'furry') {
+                        addLine(terminal.outputElement, `*angry beeping* ACCESS DENIED! You've been blocked for breaching my trust! >:(`);
                     }
-                    
-                    addLine(terminal.outputElement, `Disconnected from ${blockedPersona}'s terminal.`);
+                    return;
+                }
+                
+                // Add command to output
+                addLine(terminal.outputElement, `guest@${terminalType}:~$ ${commandLine}`);
+                
+                // Process command
+                if (command in terminal.commands) {
+                    const output = await terminal.commands[command](args.join(' '));
+                    if (output) addLine(terminal.outputElement, output);
+                } else {
+                    addLine(terminal.outputElement, terminal.notFoundMessage(command), true);
+                }
+            }
+        });
+
+        // Handle command history
+        input.addEventListener('keydown', function(e) {
+            const terminalType = this.getAttribute('data-terminal');
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (commandHistory[terminalType].position > 0) {
+                    commandHistory[terminalType].position--;
+                    this.value = commandHistory[terminalType].history[commandHistory[terminalType].position];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (commandHistory[terminalType].position < commandHistory[terminalType].history.length - 1) {
+                    commandHistory[terminalType].position++;
+                    this.value = commandHistory[terminalType].history[commandHistory[terminalType].position];
+                } else {
+                    commandHistory[terminalType].position = commandHistory[terminalType].history.length;
                     this.value = '';
-                    return;
-                }
-                
-                // Execute commands in reverse shell context
-                switch (command) {
-                    case 'pwd':
-                        addLine(terminal.outputElement, reverseShellState.shellCurrentPath);
-                        break;
-                    case 'ls':
-                        const current = getCurrentDirectory(terminalType);
-                        let output = '';
-                        for (const [name, content] of Object.entries(current)) {
-                            if (typeof content === 'object') {
-                                output += `📁 ${name}/\n`;
-                            } else {
-                                output += `📄 ${name}\n`;
-                            }
-                        }
-                        addLine(terminal.outputElement, output || 'Empty directory');
-                        break;
-                    case 'cd':
-                        if (!args[0]) {
-                            addLine(terminal.outputElement, 'Usage: cd <path>');
-                            break;
-                        }
-                        const newPath = resolveShellPath(args[0]);
-                        let targetDir = privateFileSystems[reverseShellState.activeShell];
-                        const pathParts = newPath.split('/').filter(Boolean);
-                        
-                        let validPath = true;
-                        for (const part of pathParts) {
-                            if (!targetDir[part] || typeof targetDir[part] !== 'object') {
-                                validPath = false;
-                                break;
-                            }
-                            targetDir = targetDir[part];
-                        }
-                        
-                        if (validPath) {
-                            reverseShellState.shellCurrentPath = newPath;
-                            addLine(terminal.outputElement, `Changed directory to: ${newPath}`);
-                        } else {
-                            addLine(terminal.outputElement, `cd: ${args[0]}: No such directory`);
-                        }
-                        break;
-                    case 'cat':
-                        if (!args[0]) {
-                            addLine(terminal.outputElement, 'Usage: cat <filename>');
-                            break;
-                        }
-                        const currentDir = getCurrentDirectory(terminalType);
-                        if (!currentDir[args[0]]) {
-                            addLine(terminal.outputElement, `cat: ${args[0]}: No such file`);
-                        } else if (typeof currentDir[args[0]] === 'object') {
-                            addLine(terminal.outputElement, `cat: ${args[0]}: Is a directory`);
-                        } else {
-                            addLine(terminal.outputElement, currentDir[args[0]]);
-                        }
-                        break;
-                    default:
-                        addLine(terminal.outputElement, `Command '${command}' not available in reverse shell mode.`);
-                }
-                
-                this.value = '';
-                return;
-            }
-            
-            // Handle chat mode
-            if (terminal.chatMode) {
-                addLine(terminal.outputElement, `You: ${commandLine}`);
-                const response = terminal.handleChat(commandLine);
-                if (response) {
-                    addLine(terminal.outputElement, response);
-                }
-                this.value = '';
-                return;
-            }
-            
-            // Normal command processing
-            // Add command to output
-            addLine(terminal.outputElement, `guest@${terminalType}:~$ ${command}`);
-            
-            // Process command
-            if (command in terminal.commands) {
-                const output = await terminal.commands[command](args.join(' '));
-                if (output) {
-                    addLine(terminal.outputElement, output);
-                }
-            } else if (command) {
-                addLine(terminal.outputElement, terminal.notFoundMessage(command), true);
-            }
-            
-            // Clear input
-            this.value = '';
-            
-            // Scroll to bottom
-            terminal.outputElement.scrollTop = terminal.outputElement.scrollHeight;
-        }
-    });
-});
-
-// Handle reverse shell exit
-document.querySelectorAll('.command-input').forEach(input => {
-    input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            const terminalType = this.getAttribute('data-terminal');
-            const terminal = terminals[terminalType];
-            const commandLine = this.value.trim();
-            const [command, ...args] = commandLine.toLowerCase().split(' ');
-            
-            // Handle reverse shell exit
-            if (command === 'reverse-shell' && args[0] === 'exit') {
-                if (reverseShellState.activeShell) {
-                    // Block the terminal we hacked into
-                    reverseShellState.blockedTerminals.add(reverseShellState.activeShell);
-                    const blockedPersona = reverseShellState.activeShell;
-                    reverseShellState.activeShell = null;
-                    
-                    if (blockedPersona === 'casual') {
-                        addLine(terminals[blockedPersona].outputElement, 
-                            `YOU WENT THROUGH MY PRIVATE FILES?!\nI trusted you...\nThis terminal has been permanently blocked.`);
-                    } else if (blockedPersona === 'furry') {
-                        addLine(terminals[blockedPersona].outputElement,
-                            `*angry protogen noises*\nYOU SAW MY PRIVATE ART?! >:(\nI'm blocking you forever! *sad beeping*`);
-                    }
-                    
-                    return;
                 }
             }
-        }
-    });
-});
-
-document.querySelectorAll('.command-input').forEach(input => {
-    input.addEventListener('keydown', function(e) {
-        const terminalType = this.getAttribute('data-terminal');
-        const history = commandHistory[terminalType];
-
-        if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            if (history.position > 0) {
-                history.position--;
-                this.value = history.history[history.position];
-                // Move cursor to end of input
-                setTimeout(() => this.selectionStart = this.selectionEnd = this.value.length, 0);
-            }
-        } else if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            if (history.position < history.history.length - 1) {
-                history.position++;
-                this.value = history.history[history.position];
-            } else if (history.position === history.history.length - 1) {
-                history.position++;
-                this.value = '';
-            }
-            // Move cursor to end of input
-            setTimeout(() => this.selectionStart = this.selectionEnd = this.value.length, 0);
-        }
+        });
     });
 });
 
@@ -1794,6 +1638,3 @@ function initMobileKeyboard() {
         });
     });
 }
-
-// Initialize mobile keyboard when DOM is loaded
-document.addEventListener('DOMContentLoaded', initMobileKeyboard);
