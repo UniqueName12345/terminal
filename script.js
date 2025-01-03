@@ -1,3 +1,7 @@
+// NOTES TO ANYONE READING THIS CODE:
+// This code is absolutely MASSIVE
+// Please just use CTRL+F to find the function you want (your sanity will thank you!)
+
 // Set the current time for all terminals
 const currentTime = new Date('2025-01-02T17:37:38+08:00');
 document.querySelectorAll('[id$="-time"]').forEach(el => {
