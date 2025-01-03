@@ -275,7 +275,7 @@ const terminals = {
     chat     - Start a chat session with me (BETA)
     img      - Search for images (usage: img [website] "[search]")
               Websites: DA (DeviantArt), AI (AI Generator), SB (Safebooru, 18+ only), or blank for Google
-    music    - Play YouTube music (usage: music [video URL/ID/"search query"])
+    youtube  - Open YouTube (usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]")
     ls       - List files in current directory
     cd       - Change directory (usage: cd <path>)
     cat      - Read a text file (usage: cat <filename>)
@@ -609,54 +609,27 @@ img SB "verify no"    - If you are under 18`;
                 window.open(url, '_blank');
                 return `Opening ${website || 'Google Images'} search for "${search}"...`;
             },
-            'music': (args) => {
-                if (!args) {
-                    return `Usage: music [video URL/ID/"search query"]
-
-Examples:
-  music dQw4w9WgXcQ                     - Play by video ID
-  music https://youtu.be/dQw4w9WgXcQ    - Play by URL
-  music "never gonna give you up"        - Search and play first result`;
+            'youtube': (args) => {
+                if (!args.length) {
+                    return 'Usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]"\nExample: youtube "cute cats" or youtube channel "@markiplier"';
                 }
 
-                // Show extension recommendation first time
-                if (!youtubeRecommendationShown.casual) {
-                    youtubeRecommendationShown.casual = true;
-                    addLine(terminal.outputElement, `Pro Tip: Install these browser extensions for a better YouTube Music experience:
-- uBlock Origin: Blocks ads
-- SponsorBlock: Enable "non-music sections" category to automatically skip non-music parts
-
-These extensions significantly improve the YouTube Music experience!`);
+                if (args[0] === 'channel' && args[1]?.startsWith('@')) {
+                    return `Opening ${args[1]}'s YouTube channel...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
-                let videoId = '';
+                let query = args.join(' ');
                 
-                // Check if it's a video ID (11 characters)
-                if (args.match(/^[a-zA-Z0-9_-]{11}$/)) {
-                    videoId = args;
+                // Check if it's a video ID (11 characters) or URL
+                if (/^[a-zA-Z0-9_-]{11}$/.test(query)) {
+                    return `Opening YouTube video...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
-                // Check if it's a URL
-                else if (args.includes('youtu')) {
-                    const urlMatch = args.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-                    if (urlMatch) {
-                        videoId = urlMatch[1];
-                    }
-                }
-                // Treat as search query
-                else {
-                    // For search queries, open YouTube Music search
-                    const searchQuery = encodeURIComponent(args.replace(/^"|"$/g, ''));
-                    window.open(`https://music.youtube.com/search?q=${searchQuery}`, '_blank');
-                    return `Opening YouTube Music search for "${args}"...`;
+                
+                if (query.includes('youtube.com') || query.includes('youtu.be')) {
+                    return `Opening YouTube video...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
-                // If we have a video ID, play it directly
-                if (videoId) {
-                    window.open(`https://music.youtube.com/watch?v=${videoId}`, '_blank');
-                    return `Playing YouTube video ${videoId}...`;
-                }
-
-                return `Invalid video URL or ID. Please provide a valid YouTube URL, video ID, or search query.`;
+                return `Searching YouTube for "${query}"...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
             },
             'alias': (args) => {
                 if (!args.length || args[0] === 'help') {
@@ -765,7 +738,7 @@ Come back when you're ready to use actual commands and treat me with respect.
     chat      - Start a chat session! (BETA) >w<
     img       - Search for images (usage: img [website] "[search]")
                Websites: DA (DeviantArt), FA (FurAffinity), E9 (E926, 18+ only), or blank for Google
-    music     - Play YouTube music (usage: music [video URL/ID/"search query"]) >w<
+    youtube   - Open YouTube (usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]")
     ls        - List files in current directory >w<
     cd        - Change directory (usage: cd <path>)
     cat       - Read a text file (usage: cat <filename>)
@@ -1126,55 +1099,27 @@ img E9 "verify no"    - If you are under 18`;
                 window.open(url, '_blank');
                 return `*happy beeping* Opening ${website || 'Google Images'} search for "${search}"! >w<`;
             },
-            'music': (args) => {
-                if (!args) {
-                    return `*helpful beeping* Usage: music [video URL/ID/"search query"]
-
-Examples:
-  music dQw4w9WgXcQ                     - Play by video ID >w<
-  music https://youtu.be/dQw4w9WgXcQ    - Play by URL :3
-  music "never gonna give you up"        - Search and play first result ^w^`;
+            'youtube': (args) => {
+                if (!args.length) {
+                    return '*helpful beeping* Usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]"\nExample: youtube "fursuit dance" or youtube channel "@majira"';
                 }
 
-                // Show extension recommendation first time
-                if (!youtubeRecommendationShown.furry) {
-                    youtubeRecommendationShown.furry = true;
-                    addLine(terminal.outputElement, `*excited beeping* Protogen Pro Tip! >w<
-Install these browser extensions for the best YouTube Music experience:
-- uBlock Origin: Blocks those annoying ads! >:3
-- SponsorBlock: Enable "non-music sections" category to automatically skip non-music parts! ^w^
-
-My circuits run much smoother with these installed! *happy LED patterns*`);
+                if (args[0] === 'channel' && args[1]?.startsWith('@')) {
+                    return `*happy beeping* Opening ${args[1]}'s YouTube channel! >w<\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
-                let videoId = '';
+                let query = args.join(' ');
                 
-                // Check if it's a video ID (11 characters)
-                if (args.match(/^[a-zA-Z0-9_-]{11}$/)) {
-                    videoId = args;
+                // Check if it's a video ID (11 characters) or URL
+                if (/^[a-zA-Z0-9_-]{11}$/.test(query)) {
+                    return `*beep boop* Opening YouTube video!\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
-                // Check if it's a URL
-                else if (args.includes('youtu')) {
-                    const urlMatch = args.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-                    if (urlMatch) {
-                        videoId = urlMatch[1];
-                    }
-                }
-                // Treat as search query
-                else {
-                    // For search queries, open YouTube Music search
-                    const searchQuery = encodeURIComponent(args.replace(/^"|"$/g, ''));
-                    window.open(`https://music.youtube.com/search?q=${searchQuery}`, '_blank');
-                    return `*happy beeping* Opening YouTube Music search for "${args}"! >w<`;
+                
+                if (query.includes('youtube.com') || query.includes('youtu.be')) {
+                    return `*beep boop* Opening YouTube video!\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
-                // If we have a video ID, play it directly
-                if (videoId) {
-                    window.open(`https://music.youtube.com/watch?v=${videoId}`, '_blank');
-                    return `*vibing to the music* Playing YouTube video ${videoId}! :3`;
-                }
-
-                return `*confused beeping* Invalid video URL or ID... Please provide a valid YouTube URL, video ID, or search query! >_<`;
+                return `*happy beeping* Searching YouTube for "${query}"! >w<\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
             },
             'owo': () => 'uwu',
             'uwu': () => 'owo',
@@ -1601,7 +1546,7 @@ function initMobileKeyboard() {
     const commonCommands = [
         'help', 'clear', 'ls', 'pwd', 'cd', 'chat',
         'img DA "', 'img E9 "', 'img FA "',
-        'music "', 'about', 'date'
+        'youtube "', 'about', 'date'
     ];
 
     function updateInput(value) {
