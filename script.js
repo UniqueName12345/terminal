@@ -278,6 +278,7 @@ const terminals = {
     cat      - Read a text file (usage: cat <filename>)
     pwd      - Print working directory
     neofetch - Display system information
+    mystuff  - Switch to my personal page (Warning: no terminal access there!)
     alias    - Manage aliases (try: "alias help")`,
             'about': () => `Name: Ethan Johnathan (not my real last name but)
 Age: 15
@@ -688,16 +689,20 @@ img SB "verify no"    - If you are under 18`;
                 const lastMessageTime = currentTime.toLocaleString();
                 return `
     ⠀⠀⠀⠀⣀⣤⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Casual
-    ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀    -----------
-    ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀    Name: Ethan
-    ⢸⣿⣿⣿⣿⠟⠋⠉⠉⠙⠻⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀    Terminal: Casual
+    ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀    -----------
+    ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀    Name: Ethan
+    ⢸⣿⣿⣿⠟⠋⠉⠉⠙⠻⣿⣿⣿⣿⣿⣇⠀⠀⠀    Terminal: Casual
     ⢸⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⠀⠀⠀    Last Message: ${lastMessageTime}
     ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⠀⠀⠀    
     ⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⡿⠀⠀⠀    "Programming and technology
     ⠘⣿⣿⣿⣧⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⣿⠃⠀⠀⠀     enthusiast, always learning!"
     ⠀⠹⣿⣿⣿⣷⣤⣤⣴⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀
     ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀
-    ⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠟⠛⠉⠀⠀⠀⠀⠀⠀⠀`;
+    ⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠟⠛⠉⠀⠀⠀⠀⠀⠀⠀`;
+            },
+            'mystuff': () => {
+                window.location.href = '/casualstuff/';
+                return 'Switching to my personal page... Note that the terminal commands won\'t work there!';
             },
         },
         chatMode: false,
@@ -768,13 +773,14 @@ Come back when you're ready to use actual commands and treat me with respect.
     interests - My furry interests
     question  - Ask me a question! (try: "question help")
     img       - Search for images (usage: img [website] "[search]")
-               Websites: DA (DeviantArt), AI (AI Generator), SB (Safebooru, 18+ only), or blank for Google
+               Websites: DA (DeviantArt), AI (AI Generator), FA (FurAffinity), E6 (e621, 18+ only), or blank for Google
     youtube   - Open YouTube (usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]")
     ls        - List files in current directory
     cd        - Change directory (usage: cd <path>)
     cat       - Read a text file (usage: cat <filename>)
     pwd       - Show current directory
     neofetch  - Display system information
+    mystuff   - Switch to my personal page (Warning: no terminal access there!)
     alias     - Manage aliases (try: "alias help")`,
             'about': () => `*happy protogen noises*
 Name: Pixel
@@ -993,17 +999,21 @@ Your question: "${input}"`;
 
 Websites:
   DA = DeviantArt (add -ai to exclude AI art)
-  FA = FurAffinity (18+ only!)
-  E9 = E926 (18+ only!)
+  FA = FurAffinity (general search)
+  E9 = E926 (safe for work)
+  E6 = That other site ;3
   (blank) = Google Images
 
 Example: img DA "cute protogen"
          img DA "cute protogen -ai" (excludes AI art)
+         img FA "cute protogen"
          img "cute protogen" (uses Google)
 
 *concerned beeping* Note about DA: They do allow AI art, but it's tagged! >:c
 Add -ai to your search to exclude AI-generated content! >w<
-I appreciate artists properly tagging their work! *happy LED patterns*`;
+I appreciate artists properly tagging their work! *happy LED patterns*
+
+*whispers* The spicier site works just like E9... if you know what I mean >w<`;
                     } else {
                         return `*helpful beeping* Usage: img [website] "[search]"
 
@@ -1212,15 +1222,19 @@ img E9 "verify no"    - If you are under 18`;
                 const lastMessageTime = currentTime.toLocaleString();
                 return `
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Furry
-    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀    -----------
-    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
-    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
-    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
-    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
-    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
-    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
-    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
-    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
+    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀    -----------
+    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
+    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
+    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
+    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
+    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
+            },
+            'mystuff': () => {
+                window.location.href = '/furrystuff/';
+                return '*excited beeping* Taking you to my personal page! Note that my terminal commands won\'t work there though >w<';
             },
         },
         chatMode: false,
@@ -1296,6 +1310,7 @@ Please reflect on how to properly treat your local protogen...
     cat      - Read a text file (usage: cat <filename>)
     pwd      - Print working directory
     neofetch - Display system information
+    mystuff  - Switch to my personal page (Warning: no terminal access there)
     alias    - Manage aliases (try: "alias help")`,
             'about': () => `Professional Profile:
 Name: Ethan JRS
@@ -1368,16 +1383,16 @@ For game development inquiries and professional work.`,
                 const lastMessageTime = currentTime.toLocaleString();
                 return `
     ⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣤⣶⣶⣶⣶⣤⣤⣄⡀⠀⠀⠀⠀⠀⠀    Guest@Professional
-    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀    -----------------
-    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Professional
-    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Professional
-    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
-    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
-    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    "Efficiency and 
-    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    professionalism in code."
-    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
-    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀⠀⠀
-    ⠀⠀⠀⠀⠀⠈⠉⠛⠛⠛⠛⠛⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀`;
+    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀    -----------------
+    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Professional
+    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Professional
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    "Efficiency and 
+    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    professionalism in code."
+    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
+    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠈⠉⠛⠛⠛⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀`;
             },
             'alias': (args) => {
                 if (!args.length || args[0] === 'help') {
@@ -1409,6 +1424,10 @@ For game development inquiries and professional work.`,
                 return Object.entries(aliases.professional)
                     .map(([alias, command]) => `${alias} -> ${command}`)
                     .join('\n') || 'No aliases defined';
+            },
+            'mystuff': () => {
+                window.location.href = '/professionalstuff/';
+                return 'Redirecting to my professional portfolio page. Please note that terminal functionality will not be available there.';
             },
         },
         notFoundMessage: (cmd) => `Error: Command '${cmd}' not recognized. Please use 'help' to view available commands.`
