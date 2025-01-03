@@ -130,6 +130,18 @@ P.S. If you're seeing this... well done on finding this easter egg! 🥚`,
     }
 };
 
+// Chat data storage
+let chatData = {
+    casual: null,
+    furry: null
+};
+
+// Alias storage
+const aliases = {
+    casual: { 'cls': 'clear' },
+    furry: { 'cls': 'clear' }
+};
+
 // Helper function to get current directory object
 function getCurrentDirectory(terminal) {
     if (reverseShellState.activeShell) {
@@ -214,12 +226,6 @@ function resolveShellPath(path) {
     return reverseShellState.shellCurrentPath + '/' + path;
 }
 
-// Chat data storage
-let chatData = {
-    casual: null,
-    furry: null
-};
-
 // Load chat data function
 async function loadChatData(persona) {
     try {
@@ -255,7 +261,8 @@ const terminals = {
     cd       - Change directory (usage: cd <path>)
     cat      - Read a text file (usage: cat <filename>)
     pwd      - Print working directory
-    reverse-shell - [DANGEROUS] Attempt to access another persona's private files`,
+    reverse-shell - [DANGEROUS] Attempt to access another persona's private files
+    alias    - Manage aliases (try: "alias help")`,
             'about': () => `Name: Ethan Johnathan (not my real last name but)
 Age: 15
 Interests: Coding and Technology
@@ -621,6 +628,40 @@ These extensions significantly improve the YouTube Music experience!`);
 
                 return `Invalid video URL or ID. Please provide a valid YouTube URL, video ID, or search query.`;
             },
+            'alias': (args) => {
+                if (!args.length || args[0] === 'help') {
+                    return `Usage:
+    alias         - List all aliases
+    alias add [command] [alias]    - Add new alias
+    alias remove [alias]           - Remove an alias`;
+                }
+                
+                if (args[0] === 'add' && args.length === 3) {
+                    const [_, command, aliasName] = args;
+                    if (command in terminals.casual.commands || command in aliases.casual) {
+                        aliases.casual[aliasName] = command;
+                        return `Added alias: ${aliasName} -> ${command}`;
+                    }
+                    return `Error: Command '${command}' not found`;
+                }
+                
+                if (args[0] === 'remove' && args.length === 2) {
+                    const [_, aliasName] = args;
+                    if (aliasName === 'cls') {
+                        return `Error: Cannot remove default alias 'cls'`;
+                    }
+                    if (aliasName in aliases.casual) {
+                        delete aliases.casual[aliasName];
+                        return `Removed alias: ${aliasName}`;
+                    }
+                    return `Error: Alias '${aliasName}' not found`;
+                }
+                
+                // List all aliases
+                return Object.entries(aliases.casual)
+                    .map(([alias, command]) => `${alias} -> ${command}`)
+                    .join('\n') || 'No aliases defined';
+            },
         },
         chatMode: false,
         handleChat: (input) => {
@@ -701,7 +742,8 @@ Come back when you're ready to use actual commands and treat me with respect.
     pwd       - Show current directory
     reverse-shell - [DANGER] Try to access another persona's private data o_o
     owo       - uwu
-    uwu       - owo?`,
+    uwu       - owo?
+    alias     - Manage aliases (try: "alias help")`,
             'about': () => `*happy protogen noises*
 Name: Pixel
 Species: Protogen
@@ -1019,7 +1061,6 @@ img E9 "verify no"    - If you are under 18`;
                     return `*angry protogen noises* I don't support dedicated AI art sites! >:c
 It takes jobs away from real artists and uses their work without permission!
 Please use DA (with -ai to exclude AI art) or Google to find real art made by real artists! >w<
-
 *helpful beeping* Example: img DA "cute protogen -ai"`;
                 }
 
@@ -1101,6 +1142,40 @@ My circuits run much smoother with these installed! *happy LED patterns*`);
             },
             'owo': () => 'uwu',
             'uwu': () => 'owo',
+            'alias': (args) => {
+                if (!args.length || args[0] === 'help') {
+                    return `*helpful beeping* Usage:
+    alias         - List all aliases
+    alias add [command] [alias]    - Add new alias
+    alias remove [alias]           - Remove an alias`;
+                }
+                
+                if (args[0] === 'add' && args.length === 3) {
+                    const [_, command, aliasName] = args;
+                    if (command in terminals.furry.commands || command in aliases.furry) {
+                        aliases.furry[aliasName] = command;
+                        return `*happy beep* Added alias: ${aliasName} -> ${command}`;
+                    }
+                    return `*sad beep* Error: Command '${command}' not found`;
+                }
+                
+                if (args[0] === 'remove' && args.length === 2) {
+                    const [_, aliasName] = args;
+                    if (aliasName === 'cls') {
+                        return `*protective beep* Error: Cannot remove default alias 'cls'`;
+                    }
+                    if (aliasName in aliases.furry) {
+                        delete aliases.furry[aliasName];
+                        return `*beep* Removed alias: ${aliasName}`;
+                    }
+                    return `*confused beep* Error: Alias '${aliasName}' not found`;
+                }
+                
+                // List all aliases
+                return Object.entries(aliases.furry)
+                    .map(([alias, command]) => `${alias} -> ${command}`)
+                    .join('\n') || '*beep* No aliases defined';
+            },
         },
         chatMode: false,
         handleChat: (input) => {
@@ -1265,7 +1340,10 @@ document.querySelectorAll('.command-input').forEach(input => {
             const terminalType = this.getAttribute('data-terminal');
             const terminal = terminals[terminalType];
             const commandLine = this.value.trim();
-            const [command, ...args] = commandLine.toLowerCase().split(' ');
+            const [rawCommand, ...args] = commandLine.toLowerCase().split(' ');
+            
+            // Check if command is an alias
+            const command = aliases[terminalType][rawCommand] || rawCommand;
             
             // Don't process anything if terminal is blocked
             if (reverseShellState.blockedTerminals.has(terminalType)) {
