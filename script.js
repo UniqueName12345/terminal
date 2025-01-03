@@ -684,7 +684,7 @@ Come back when you're ready to use actual commands and treat me with respect.
             'help': () => `*beep* Available commands:
     help      - Show available commands
     about     - Learn about me! >w<
-    clear     - Clear terminal screen
+    clear     - Clear terminal
     date      - Show current time
     species   - Information about my species
     interests - My furry interests
@@ -699,7 +699,9 @@ Come back when you're ready to use actual commands and treat me with respect.
     cd        - Change directory (usage: cd <path>)
     cat       - Read a text file (usage: cat <filename>)
     pwd       - Show current directory
-    reverse-shell - [DANGER] Try to access another persona's private data o_o`,
+    reverse-shell - [DANGER] Try to access another persona's private data o_o
+    owo       - uwu
+    uwu       - owo?`,
             'about': () => `*happy protogen noises*
 Name: Pixel
 Species: Protogen
@@ -1097,6 +1099,8 @@ My circuits run much smoother with these installed! *happy LED patterns*`);
 
                 return `*confused beeping* Invalid video URL or ID... Please provide a valid YouTube URL, video ID, or search query! >_<`;
             },
+            'owo': () => 'uwu',
+            'uwu': () => 'owo',
         },
         chatMode: false,
         handleChat: (input) => {
