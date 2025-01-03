@@ -610,32 +610,38 @@ img SB "verify no"    - If you are under 18`;
                 return `Opening ${website || 'Google Images'} search for "${search}"...`;
             },
             'youtube': (args) => {
-                if (!args.length) {
+                if (!args) {
                     return 'Usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]"\nExample: youtube "cute cats" or youtube channel "@markiplier"';
                 }
 
-                // Handle channel command
-                if (args[0] === 'channel') {
-                    if (args[1] && args[1].startsWith('@')) {
-                        const handle = args[1];
+                // Handle channel command first
+                const beforeQuotes = args.split('"')[0].trim();
+                if (beforeQuotes === 'channel') {
+                    const handle = args.split(' ').slice(1)[0];
+                    if (handle?.startsWith('@')) {
                         window.open(`https://youtube.com/${handle}`, '_blank');
                         return `Opening ${handle}'s YouTube channel...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                     }
                     return 'Please provide a valid channel handle (e.g., youtube channel "@markiplier")';
                 }
 
-                // For all other cases, join the args back together
-                const query = args.join(' ').replace(/^"|"$/g, '');
-                
-                // Check if it's a video ID (11 characters)
+                // Check if the input has quotes for search
+                const matches = args.match(/"([^"]+)"/);
+                if (matches) {
+                    // It's a search query
+                    const query = matches[1];
+                    window.open(`https://youtube.com/results?search_query=${encodeURIComponent(query)}`, '_blank');
+                    return `Searching YouTube for "${query}"...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
+                }
+
+                // No quotes, treat as video ID or URL
+                const query = args.trim();
                 if (/^[a-zA-Z0-9_-]{11}$/.test(query)) {
                     window.open(`https://youtube.com/watch?v=${query}`, '_blank');
                     return `Opening YouTube video...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
-                
-                // Check if it's a URL
+
                 if (query.includes('youtube.com') || query.includes('youtu.be')) {
-                    // Extract video ID if it's a youtu.be URL
                     if (query.includes('youtu.be/')) {
                         const videoId = query.split('youtu.be/')[1].split(/[?#]/)[0];
                         window.open(`https://youtube.com/watch?v=${videoId}`, '_blank');
@@ -645,9 +651,7 @@ img SB "verify no"    - If you are under 18`;
                     return `Opening YouTube video...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
-                // If we get here, treat it as a search query
-                window.open(`https://youtube.com/results?search_query=${encodeURIComponent(query)}`, '_blank');
-                return `Searching YouTube for "${query}"...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
+                return 'Invalid input. Use: youtube "search query", youtube channel "@handle", or provide a video URL/ID';
             },
             'alias': (args) => {
                 if (!args.length || args[0] === 'help') {
@@ -1118,32 +1122,38 @@ img E9 "verify no"    - If you are under 18`;
                 return `*happy beeping* Opening ${website || 'Google Images'} search for "${search}"! >w<`;
             },
             'youtube': (args) => {
-                if (!args.length) {
+                if (!args) {
                     return '*helpful beeping* Usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]"\nExample: youtube "fursuit dance" or youtube channel "@majira"';
                 }
 
-                // Handle channel command
-                if (args[0] === 'channel') {
-                    if (args[1] && args[1].startsWith('@')) {
-                        const handle = args[1];
+                // Handle channel command first
+                const beforeQuotes = args.split('"')[0].trim();
+                if (beforeQuotes === 'channel') {
+                    const handle = args.split(' ').slice(1)[0];
+                    if (handle?.startsWith('@')) {
                         window.open(`https://youtube.com/${handle}`, '_blank');
                         return `*happy beeping* Opening ${handle}'s YouTube channel! >w<\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                     }
                     return '*confused beeping* Please provide a valid channel handle (e.g., youtube channel "@majira")';
                 }
 
-                // For all other cases, join the args back together
-                const query = args.join(' ').replace(/^"|"$/g, '');
-                
-                // Check if it's a video ID (11 characters)
+                // Check if the input has quotes for search
+                const matches = args.match(/"([^"]+)"/);
+                if (matches) {
+                    // It's a search query
+                    const query = matches[1];
+                    window.open(`https://youtube.com/results?search_query=${encodeURIComponent(query)}`, '_blank');
+                    return `*happy beeping* Searching YouTube for "${query}"! >w<\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
+                }
+
+                // No quotes, treat as video ID or URL
+                const query = args.trim();
                 if (/^[a-zA-Z0-9_-]{11}$/.test(query)) {
                     window.open(`https://youtube.com/watch?v=${query}`, '_blank');
                     return `*beep boop* Opening YouTube video!\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
-                
-                // Check if it's a URL
+
                 if (query.includes('youtube.com') || query.includes('youtu.be')) {
-                    // Extract video ID if it's a youtu.be URL
                     if (query.includes('youtu.be/')) {
                         const videoId = query.split('youtu.be/')[1].split(/[?#]/)[0];
                         window.open(`https://youtube.com/watch?v=${videoId}`, '_blank');
@@ -1153,9 +1163,7 @@ img E9 "verify no"    - If you are under 18`;
                     return `*beep boop* Opening YouTube video!\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
-                // If we get here, treat it as a search query
-                window.open(`https://youtube.com/results?search_query=${encodeURIComponent(query)}`, '_blank');
-                return `*happy beeping* Searching YouTube for "${query}"! >w<\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
+                return '*confused beeping* Invalid input. Use: youtube "search query", youtube channel "@handle", or provide a video URL/ID >_<';
             },
             'owo': () => 'uwu',
             'uwu': () => 'owo',
