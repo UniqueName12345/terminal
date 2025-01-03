@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Congratulations!</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+        }
+        .container {
+            padding: 2rem;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            max-width: 600px;
+            position: relative;
+        }
+        h1 {
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        .ascii-art {
+            font-family: monospace;
+            white-space: pre;
+            margin: 2rem 0;
+            font-size: 0.8rem;
+        }
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="matrix-bg" id="matrix"></canvas>
+    <div class="container">
+        <h1>🎉 Congratulations, Detective! 🎉</h1>
+        <p>You've discovered the secret "website" persona! Well done on your investigation skills.</p>
+        <div class="ascii-art">
+           _____                            _         _ 
+          / ____|                          | |       | |
+         | |     ___  _ __   __ _ _ __ __ _| |_ ___  | |
+         | |    / _ \| '_ \ / _` | '__/ _` | __/ __| | |
+         | |___| (_) | | | | (_| | | | (_| | |_\__ \ |_|
+          \_____\___/|_| |_|\__, |_|  \__,_|\__|___/ (_)
+                             __/ |                       
+                            |___/                        
+        </div>
+        <p>This is a special easter egg page that few will find. You must be quite curious to have discovered the website persona!</p>
+        <p>Time of discovery: 2025-01-02 21:31:02 PST</p>
+    </div>
+
+    <script>
+        // Matrix rain effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*";
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = new Array(Math.floor(columns)).fill(1);
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 33);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
