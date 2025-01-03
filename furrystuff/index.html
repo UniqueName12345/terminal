@@ -53,6 +53,26 @@
             font-size: 24px;
             color: #c3e88d;
         }
+        .nav-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #1e2030;
+            border-radius: 8px;
+            border: 1px solid #444a73;
+            margin-bottom: 20px;
+        }
+        .nav-menu a {
+            color: #c8d3f5;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .nav-menu a.active {
+            background-color: #82aaff;
+            color: #1e2030;
+        }
     </style>
     <script>
         // Konami Code Easter Egg
@@ -168,7 +188,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>*happy beeping* Welcome to Pixel's Page! >w<</h1>
+        <nav class="nav-menu">
+            <a href="index.html" class="active">Home</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="specs.html">Specs</a>
+            <a href="friends.html">Friends</a>
+            <a href="blog.html">Blog</a>
+        </nav>
+
+        <h1>*happy beeping* Welcome to Pixel's Protogen Page! >w<</h1>
         
         <div class="protogen-art">
             ⚡️🤖✨ BEEP BOOP! ✨🤖⚡️

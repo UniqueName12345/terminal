@@ -44,6 +44,24 @@
         .back-button:hover {
             background-color: #8d99ae;
         }
+        .nav-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            margin-right: 20px;
+        }
+        .nav-menu a.active {
+            color: #2b2d42;
+            font-weight: bold;
+        }
     </style>
     <script>
         // Konami Code Easter Egg
@@ -116,6 +134,13 @@
 </head>
 <body>
     <div class="container">
+        <nav class="nav-menu">
+            <a href="index.html" class="active">Home</a>
+            <a href="projects.html">Projects</a>
+            <a href="games.html">Gaming</a>
+            <a href="blog.html">Blog</a>
+        </nav>
+
         <h1>Welcome to Ethan's Personal Page! 😊</h1>
         
         <div class="section">

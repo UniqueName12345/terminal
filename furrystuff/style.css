@@ -1,0 +1,227 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #2a2d3e;
+    color: #c8d3f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #222436;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    border: 1px solid #444a73;
+}
+
+h1 {
+    color: #82aaff;
+    border-bottom: 3px solid #444a73;
+    padding-bottom: 10px;
+}
+
+.section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #1e2030;
+    border-radius: 8px;
+    border: 1px solid #444a73;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #82aaff;
+    color: #1e2030;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.back-button:hover {
+    background-color: #c3e88d;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding: 10px;
+    background-color: #1e2030;
+    border-radius: 8px;
+    border: 1px solid #444a73;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #82aaff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.nav-menu a:hover {
+    background-color: #444a73;
+    color: #c3e88d;
+}
+
+.nav-menu a.active {
+    background-color: #82aaff;
+    color: #1e2030;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #444a73;
+}
+
+.placeholder {
+    background-color: #1e2030;
+    padding: 100px 20px;
+    text-align: center;
+    color: #82aaff;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(30, 32, 48, 0.9);
+    padding: 10px;
+    transform: translateY(100%);
+    transition: transform 0.3s;
+}
+
+.gallery-item:hover .overlay {
+    transform: translateY(0);
+}
+
+.commission-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.commission-card {
+    background-color: #1e2030;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #444a73;
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.spec-card {
+    background-color: #1e2030;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #444a73;
+}
+
+.progress {
+    background-color: #2a2d3e;
+    border-radius: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background-color: #82aaff;
+    color: #1e2030;
+    padding: 5px 10px;
+    text-align: right;
+    transition: width 0.3s;
+}
+
+.friend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.friend-card {
+    background-color: #1e2030;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #444a73;
+    text-align: center;
+}
+
+.friend-pic {
+    background-color: #2a2d3e;
+    padding: 40px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: #82aaff;
+}
+
+.blog-post {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: #1e2030;
+    border-radius: 8px;
+    border: 1px solid #444a73;
+}
+
+.post-meta {
+    color: #82aaff;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.read-more {
+    display: inline-block;
+    color: #c3e88d;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.tag {
+    background-color: #444a73;
+    color: #82aaff;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+}
+
+.feature-list, .con-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li, .con-list li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #2a2d3e;
+    border-radius: 5px;
+    border: 1px solid #444a73;
+}
