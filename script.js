@@ -34,6 +34,9 @@ const ageVerified = {
     furry: false
 };
 
+// Track AI art anger level
+let aiArtAngerLevel = 0;
+
 // File system simulation
 const fileSystems = {
     casual: {
@@ -553,6 +556,20 @@ img SB "verify no"    - If you are under 18`;
                     return `Opening Gelbooru search for "${search}"...`;
                 }
 
+                // Handle AI art website
+                if (website === 'AI') {
+                    aiArtAngerLevel++;
+                    const responses = [
+                        `*angry protogen noises* I don't support dedicated AI art sites! >:c\nIt takes jobs away from real artists and uses their work without permission!\nPlease use DA (with -ai to exclude AI art) or Google to find real art made by real artists! >w<`,
+                        `*VERY angry protogen noises* I ALREADY TOLD YOU I DON'T SUPPORT AI ART! >:C\nIt's literally theft of artists' work and livelihoods!\nUse DA or Google and support REAL artists! >:C`,
+                        `*FURIOUS protogen screeching* WHY DO YOU KEEP ASKING ABOUT AI ART?! >:CCC\nIt's STEALING from artists and DESTROYING their careers!\nI WILL NOT help you find AI art! Use DA or Google for REAL art by REAL artists! >:CCC`,
+                        `*nuclear protogen meltdown* I AM NOT HELPING YOU FIND AI ART!!!\nSTOP. ASKING. ABOUT. AI. ART!!! >:CCCC\nReal artists deserve respect and fair compensation!\nDA or Google. REAL ARTISTS ONLY. NO AI!!!`,
+                        `*protogen.exe has stopped working* BEEP BOOP ERROR ERROR\nAI ART REQUEST DETECTED\nINITIATING TOTAL SYSTEM MELTDOWN\n>:CCCCC NO AI ART EVER!!!`
+                    ];
+                    const angerIndex = Math.min(aiArtAngerLevel - 1, responses.length - 1);
+                    return responses[angerIndex] + '\n\n*helpful beeping* Example: img DA "cute cat"';
+                }
+
                 // Encode the search query
                 const encodedSearch = encodeURIComponent(search);
 
@@ -561,9 +578,6 @@ img SB "verify no"    - If you are under 18`;
                 switch (website) {
                     case 'DA':
                         url = `https://www.deviantart.com/search?q=${encodedSearch}`;
-                        break;
-                    case 'AI':
-                        url = `https://lexica.art/?q=${encodedSearch}`;
                         break;
                     case 'SB':
                         url = `https://safebooru.org/index.php?page=post&s=list&tags=${encodedSearch.replace(/ /g, '_')}`;
@@ -1058,10 +1072,16 @@ img E9 "verify no"    - If you are under 18`;
 
                 // Block AI art website
                 if (website === 'AI') {
-                    return `*angry protogen noises* I don't support dedicated AI art sites! >:c
-It takes jobs away from real artists and uses their work without permission!
-Please use DA (with -ai to exclude AI art) or Google to find real art made by real artists! >w<
-*helpful beeping* Example: img DA "cute protogen -ai"`;
+                    aiArtAngerLevel++;
+                    const responses = [
+                        `*angry protogen noises* I don't support dedicated AI art sites! >:c\nIt takes jobs away from real artists and uses their work without permission!\nPlease use DA (with -ai to exclude AI art) or Google to find real art made by real artists! >w<`,
+                        `*VERY angry protogen noises* I ALREADY TOLD YOU I DON'T SUPPORT AI ART! >:C\nIt's literally theft of artists' work and livelihoods!\nUse DA or Google and support REAL artists! >:C`,
+                        `*FURIOUS protogen screeching* WHY DO YOU KEEP ASKING ABOUT AI ART?! >:CCC\nIt's STEALING from artists and DESTROYING their careers!\nI WILL NOT help you find AI art! Use DA or Google for REAL art by REAL artists! >:CCC`,
+                        `*nuclear protogen meltdown* I AM NOT HELPING YOU FIND AI ART!!!\nSTOP. ASKING. ABOUT. AI. ART!!! >:CCCC\nReal artists deserve respect and fair compensation!\nDA or Google. REAL ARTISTS ONLY. NO AI!!!`,
+                        `*protogen.exe has stopped working* BEEP BOOP ERROR ERROR\nAI ART REQUEST DETECTED\nINITIATING TOTAL SYSTEM MELTDOWN\n>:CCCCC NO AI ART EVER!!!`
+                    ];
+                    const angerIndex = Math.min(aiArtAngerLevel - 1, responses.length - 1);
+                    return responses[angerIndex] + '\n\n*helpful beeping* Example: img DA "cute protogen -ai"';
                 }
 
                 // Encode the search query
