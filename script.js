@@ -615,6 +615,8 @@ img SB "verify no"    - If you are under 18`;
                 }
 
                 if (args[0] === 'channel' && args[1]?.startsWith('@')) {
+                    const handle = args[1];
+                    window.open(`https://youtube.com/${handle}`, '_blank');
                     return `Opening ${args[1]}'s YouTube channel...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
@@ -622,13 +624,24 @@ img SB "verify no"    - If you are under 18`;
                 
                 // Check if it's a video ID (11 characters) or URL
                 if (/^[a-zA-Z0-9_-]{11}$/.test(query)) {
+                    window.open(`https://youtube.com/watch?v=${query}`, '_blank');
                     return `Opening YouTube video...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
                 
                 if (query.includes('youtube.com') || query.includes('youtu.be')) {
+                    // Extract video ID if it's a youtu.be URL
+                    if (query.includes('youtu.be/')) {
+                        const videoId = query.split('youtu.be/')[1].split(/[?#]/)[0];
+                        window.open(`https://youtube.com/watch?v=${videoId}`, '_blank');
+                    } else {
+                        window.open(query, '_blank');
+                    }
                     return `Opening YouTube video...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
+                // Remove quotes if present
+                query = query.replace(/^"|"$/g, '');
+                window.open(`https://youtube.com/results?search_query=${encodeURIComponent(query)}`, '_blank');
                 return `Searching YouTube for "${query}"...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
             },
             'alias': (args) => {
@@ -1105,6 +1118,8 @@ img E9 "verify no"    - If you are under 18`;
                 }
 
                 if (args[0] === 'channel' && args[1]?.startsWith('@')) {
+                    const handle = args[1];
+                    window.open(`https://youtube.com/${handle}`, '_blank');
                     return `*happy beeping* Opening ${args[1]}'s YouTube channel! >w<\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
@@ -1112,13 +1127,24 @@ img E9 "verify no"    - If you are under 18`;
                 
                 // Check if it's a video ID (11 characters) or URL
                 if (/^[a-zA-Z0-9_-]{11}$/.test(query)) {
+                    window.open(`https://youtube.com/watch?v=${query}`, '_blank');
                     return `*beep boop* Opening YouTube video!\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
                 
                 if (query.includes('youtube.com') || query.includes('youtu.be')) {
+                    // Extract video ID if it's a youtu.be URL
+                    if (query.includes('youtu.be/')) {
+                        const videoId = query.split('youtu.be/')[1].split(/[?#]/)[0];
+                        window.open(`https://youtube.com/watch?v=${videoId}`, '_blank');
+                    } else {
+                        window.open(query, '_blank');
+                    }
                     return `*beep boop* Opening YouTube video!\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
+                // Remove quotes if present
+                query = query.replace(/^"|"$/g, '');
+                window.open(`https://youtube.com/results?search_query=${encodeURIComponent(query)}`, '_blank');
                 return `*happy beeping* Searching YouTube for "${query}"! >w<\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
             },
             'owo': () => 'uwu',
