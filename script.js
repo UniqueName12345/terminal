@@ -265,14 +265,11 @@ const terminals = {
         commands: {
             'help': () => `Available commands:
     help     - Show this help message
-    about    - Display information about me
-    clear    - Clear the terminal
-    date     - Show current date and time
+    about    - Learn about me!
+    clear    - Clear terminal
+    date     - Show current date/time
     skills   - List my programming skills
-    projects - Show my coding projects
-    contact  - Get my contact information
-    question - Ask me question (try: "question help" for topics)
-    chat     - Start a chat session with me (BETA)
+    question - Ask me a question (try: "question help")
     img      - Search for images (usage: img [website] "[search]")
               Websites: DA (DeviantArt), AI (AI Generator), SB (Safebooru, 18+ only), or blank for Google
     youtube  - Open YouTube (usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]")
@@ -280,7 +277,7 @@ const terminals = {
     cd       - Change directory (usage: cd <path>)
     cat      - Read a text file (usage: cat <filename>)
     pwd      - Print working directory
-    reverse-shell - [DANGEROUS] Attempt to access another persona's private files
+    neofetch - Display system information
     alias    - Manage aliases (try: "alias help")`,
             'about': () => `Name: Ethan Johnathan (not my real last name but)
 Age: 15
@@ -687,6 +684,21 @@ img SB "verify no"    - If you are under 18`;
                     .map(([alias, command]) => `${alias} -> ${command}`)
                     .join('\n') || 'No aliases defined';
             },
+            'neofetch': () => {
+                const lastMessageTime = currentTime.toLocaleString();
+                return `
+    ⠀⠀⠀⠀⣀⣤⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Casual
+    ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀    -----------
+    ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀    Name: Ethan
+    ⢸⣿⣿⣿⣿⠟⠋⠉⠉⠙⠻⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀    Terminal: Casual
+    ⢸⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⠀⠀⠀    Last Message: ${lastMessageTime}
+    ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⠀⠀⠀    
+    ⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⡿⠀⠀⠀    "Programming and technology
+    ⠘⣿⣿⣿⣧⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⣿⠃⠀⠀⠀     enthusiast, always learning!"
+    ⠀⠹⣿⣿⣿⣷⣤⣤⣴⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀
+    ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠟⠛⠉⠀⠀⠀⠀⠀⠀⠀`;
+            },
         },
         chatMode: false,
         handleChat: (input) => {
@@ -754,20 +766,15 @@ Come back when you're ready to use actual commands and treat me with respect.
     date      - Show current time
     species   - Information about my species
     interests - My furry interests
-    contact   - How to reach me! :3
-    boop      - Boop my snoot! >w<
-    question  - Ask me something! (try: "question help")
-    chat      - Start a chat session! (BETA) >w<
+    question  - Ask me a question! (try: "question help")
     img       - Search for images (usage: img [website] "[search]")
-               Websites: DA (DeviantArt), FA (FurAffinity), E9 (E926, 18+ only), or blank for Google
+               Websites: DA (DeviantArt), AI (AI Generator), SB (Safebooru, 18+ only), or blank for Google
     youtube   - Open YouTube (usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]")
-    ls        - List files in current directory >w<
+    ls        - List files in current directory
     cd        - Change directory (usage: cd <path>)
     cat       - Read a text file (usage: cat <filename>)
     pwd       - Show current directory
-    reverse-shell - [DANGER] Try to access another persona's private data o_o
-    owo       - uwu
-    uwu       - owo?
+    neofetch  - Display system information
     alias     - Manage aliases (try: "alias help")`,
             'about': () => `*happy protogen noises*
 Name: Pixel
@@ -1201,6 +1208,20 @@ img E9 "verify no"    - If you are under 18`;
                     .map(([alias, command]) => `${alias} -> ${command}`)
                     .join('\n') || '*beep* No aliases defined';
             },
+            'neofetch': () => {
+                const lastMessageTime = currentTime.toLocaleString();
+                return `
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Furry
+    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀    -----------
+    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
+    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
+    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
+    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
+    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
+            },
         },
         chatMode: false,
         handleChat: (input) => {
@@ -1266,14 +1287,16 @@ Please reflect on how to properly treat your local protogen...
         outputElement: document.getElementById('professional-output'),
         commands: {
             'help': () => `Available commands:
-    help         - Display command list
-    about        - Professional profile
-    clear        - Clear terminal
-    date         - Current date and time
-    skills       - Technical skills
-    experience   - Work experience
-    education    - Educational background
-    contact      - Professional contact information`,
+    help     - Show this help message
+    about    - Learn about me
+    clear    - Clear terminal
+    date     - Show current date/time
+    ls       - List files in current directory
+    cd       - Change directory (usage: cd <path>)
+    cat      - Read a text file (usage: cat <filename>)
+    pwd      - Print working directory
+    neofetch - Display system information
+    alias    - Manage aliases (try: "alias help")`,
             'about': () => `Professional Profile:
 Name: Ethan JRS
 Position: Student Developer
@@ -1295,7 +1318,98 @@ Location: Remote`,
     • Online Courses
     • Continuous Learning`,
             'contact': () => `Professional Email: ethan_jrs@proton.me
-For game development inquiries and professional work.`
+For game development inquiries and professional work.`,
+            'pwd': () => fileSystems.professional.currentPath,
+            'ls': () => {
+                const current = getCurrentDirectory('professional');
+                let output = '';
+                
+                for (const [name, content] of Object.entries(current)) {
+                    if (typeof content === 'object') {
+                        output += `📁 ${name}/\n`;
+                    } else {
+                        output += `📄 ${name}\n`;
+                    }
+                }
+                
+                return output || 'Empty directory';
+            },
+            'cd': (args) => {
+                if (!args) return 'Usage: cd <path>';
+                
+                const newPath = resolvePath('professional', args);
+                let current = fileSystems.professional.root;
+                const pathParts = newPath.split('/').filter(Boolean);
+                
+                for (const part of pathParts) {
+                    if (!current[part] || typeof current[part] !== 'object') {
+                        return `cd: ${args}: No such directory`;
+                    }
+                    current = current[part];
+                }
+                
+                fileSystems.professional.currentPath = newPath;
+                return '';
+            },
+            'cat': (args) => {
+                if (!args) return 'Usage: cat <filename>';
+                
+                const current = getCurrentDirectory('professional');
+                if (!current[args]) {
+                    return `cat: ${args}: No such file`;
+                }
+                if (typeof current[args] === 'object') {
+                    return `cat: ${args}: Is a directory`;
+                }
+                
+                return current[args];
+            },
+            'neofetch': () => {
+                const lastMessageTime = currentTime.toLocaleString();
+                return `
+    ⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣤⣶⣶⣶⣶⣤⣤⣄⡀⠀⠀⠀⠀⠀⠀    Guest@Professional
+    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀    -----------------
+    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Professional
+    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Professional
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    "Efficiency and 
+    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    professionalism in code."
+    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
+    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠈⠉⠛⠛⠛⠛⠛⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀`;
+            },
+            'alias': (args) => {
+                if (!args.length || args[0] === 'help') {
+                    return `Usage:
+    alias         - List all aliases
+    alias add [command] [alias]    - Add new alias
+    alias remove [alias]           - Remove an alias`;
+                }
+                
+                if (args[0] === 'add' && args.length === 3) {
+                    const [_, command, aliasName] = args;
+                    if (command in terminals.professional.commands || command in aliases.professional) {
+                        aliases.professional[aliasName] = command;
+                        return `Added alias: ${aliasName} -> ${command}`;
+                    }
+                    return `Error: Command '${command}' not found`;
+                }
+                
+                if (args[0] === 'remove' && args.length === 2) {
+                    const [_, aliasName] = args;
+                    if (aliasName in aliases.professional) {
+                        delete aliases.professional[aliasName];
+                        return `Removed alias: ${aliasName}`;
+                    }
+                    return `Error: Alias '${aliasName}' not found`;
+                }
+                
+                // List all aliases
+                return Object.entries(aliases.professional)
+                    .map(([alias, command]) => `${alias} -> ${command}`)
+                    .join('\n') || 'No aliases defined';
+            },
         },
         notFoundMessage: (cmd) => `Error: Command '${cmd}' not recognized. Please use 'help' to view available commands.`
     }
