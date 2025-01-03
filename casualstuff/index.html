@@ -45,6 +45,74 @@
             background-color: #8d99ae;
         }
     </style>
+    <script>
+        // Konami Code Easter Egg
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            const key = e.key;
+            const requiredKey = konamiCode[konamiIndex];
+
+            if (key === requiredKey) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    // Easter egg activated!
+                    document.body.style.transition = 'all 0.5s';
+                    document.body.style.background = 'linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000)';
+                    document.body.style.backgroundSize = '400% 400%';
+                    document.body.style.animation = 'gradient 15s ease infinite';
+                    
+                    // Add rainbow text effect to all text
+                    const elements = document.querySelectorAll('h1, h2, p, li');
+                    elements.forEach(el => {
+                        el.style.animation = 'rainbow 5s linear infinite';
+                    });
+
+                    // Add gaming achievement style notification
+                    const achievement = document.createElement('div');
+                    achievement.style.position = 'fixed';
+                    achievement.style.top = '20px';
+                    achievement.style.left = '50%';
+                    achievement.style.transform = 'translateX(-50%)';
+                    achievement.style.background = 'rgba(0,0,0,0.8)';
+                    achievement.style.color = '#fff';
+                    achievement.style.padding = '20px';
+                    achievement.style.borderRadius = '10px';
+                    achievement.style.zIndex = '1000';
+                    achievement.innerHTML = '🎮 Achievement Unlocked: Gamer Mode Activated! 🎮';
+                    document.body.appendChild(achievement);
+                    
+                    // Remove notification after 3 seconds
+                    setTimeout(() => achievement.remove(), 3000);
+                    
+                    // Reset index
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        // Add necessary animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes gradient {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+            @keyframes rainbow {
+                0% { color: #ff0000; }
+                20% { color: #ff8000; }
+                40% { color: #ffff00; }
+                60% { color: #00ff00; }
+                80% { color: #00ffff; }
+                100% { color: #ff0000; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </head>
 <body>
     <div class="container">

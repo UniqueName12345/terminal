@@ -54,6 +54,117 @@
             color: #c3e88d;
         }
     </style>
+    <script>
+        // Konami Code Easter Egg
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            const key = e.key;
+            const requiredKey = konamiCode[konamiIndex];
+
+            if (key === requiredKey) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    // Easter egg activated!
+                    document.body.style.transition = 'all 0.5s';
+                    
+                    // Create protogen visor effect
+                    const visor = document.createElement('div');
+                    visor.style.position = 'fixed';
+                    visor.style.top = '0';
+                    visor.style.left = '0';
+                    visor.style.width = '100%';
+                    visor.style.height = '100%';
+                    visor.style.background = 'linear-gradient(transparent 50%, rgba(0, 255, 255, 0.1) 50%)';
+                    visor.style.backgroundSize = '100% 4px';
+                    visor.style.pointerEvents = 'none';
+                    visor.style.zIndex = '1000';
+                    visor.style.animation = 'scan 1s linear infinite';
+                    document.body.appendChild(visor);
+
+                    // Add cyber effect to all text
+                    const elements = document.querySelectorAll('h1, h2, p, li');
+                    elements.forEach(el => {
+                        el.style.textShadow = '0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #0ff';
+                        el.style.animation = 'glitch 1s infinite';
+                    });
+
+                    // Add protogen notification
+                    const notification = document.createElement('div');
+                    notification.style.position = 'fixed';
+                    notification.style.top = '20px';
+                    notification.style.left = '50%';
+                    notification.style.transform = 'translateX(-50%)';
+                    notification.style.background = 'rgba(0,0,0,0.8)';
+                    notification.style.color = '#0ff';
+                    notification.style.padding = '20px';
+                    notification.style.borderRadius = '10px';
+                    notification.style.zIndex = '1001';
+                    notification.style.textShadow = '0 0 5px #0ff';
+                    notification.innerHTML = '⚡️ *happy protogen noises* PROTOGEN MODE ACTIVATED! >w< ⚡️';
+                    document.body.appendChild(notification);
+
+                    // Add floating binary in background
+                    setInterval(() => {
+                        const binary = document.createElement('div');
+                        binary.style.position = 'fixed';
+                        binary.style.left = Math.random() * 100 + 'vw';
+                        binary.style.top = '-20px';
+                        binary.style.color = '#0ff';
+                        binary.style.opacity = '0.5';
+                        binary.style.fontSize = '12px';
+                        binary.style.pointerEvents = 'none';
+                        binary.style.zIndex = '999';
+                        binary.textContent = Math.random().toString(2).substr(2, 8);
+                        document.body.appendChild(binary);
+
+                        // Animate binary falling
+                        binary.animate([
+                            { transform: 'translateY(0)', opacity: 0.5 },
+                            { transform: 'translateY(100vh)', opacity: 0 }
+                        ], {
+                            duration: 5000,
+                            easing: 'linear'
+                        }).onfinish = () => binary.remove();
+                    }, 100);
+
+                    // Remove notification after 3 seconds
+                    setTimeout(() => notification.remove(), 3000);
+                    
+                    // Reset index
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        // Add necessary animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes scan {
+                0% { transform: translateY(0); }
+                100% { transform: translateY(4px); }
+            }
+            @keyframes glitch {
+                0% { transform: none; opacity: 1; }
+                7% { transform: skew(-0.5deg, -0.9deg); opacity: 0.75; }
+                10% { transform: none; opacity: 1; }
+                27% { transform: none; opacity: 1; }
+                30% { transform: skew(0.8deg, -0.1deg); opacity: 0.75; }
+                35% { transform: none; opacity: 1; }
+                52% { transform: none; opacity: 1; }
+                55% { transform: skew(-1deg, 0.2deg); opacity: 0.75; }
+                50% { transform: none; opacity: 1; }
+                72% { transform: none; opacity: 1; }
+                75% { transform: skew(0.4deg, 1deg); opacity: 0.75; }
+                80% { transform: none; opacity: 1; }
+                100% { transform: none; opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </head>
 <body>
     <div class="container">
