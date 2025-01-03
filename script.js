@@ -37,6 +37,22 @@ const ageVerified = {
 // Track AI art anger level
 let aiArtAngerLevel = 0;
 
+// Command history for each terminal
+const commandHistory = {
+    casual: {
+        history: [],
+        position: -1
+    },
+    furry: {
+        history: [],
+        position: -1
+    },
+    professional: {
+        history: [],
+        position: -1
+    }
+};
+
 // File system simulation
 const fileSystems = {
     casual: {
@@ -1362,6 +1378,13 @@ document.querySelectorAll('.command-input').forEach(input => {
             const commandLine = this.value.trim();
             const [rawCommand, ...args] = commandLine.toLowerCase().split(' ');
             
+            // Add command to history if not empty and different from last command
+            if (commandLine && (commandHistory[terminalType].history.length === 0 || 
+                commandHistory[terminalType].history[commandHistory[terminalType].history.length - 1] !== commandLine)) {
+                commandHistory[terminalType].history.push(commandLine);
+            }
+            commandHistory[terminalType].position = commandHistory[terminalType].history.length;
+
             // Check if command is an alias
             const command = aliases[terminalType][rawCommand] || rawCommand;
             
@@ -1524,6 +1547,34 @@ document.querySelectorAll('.command-input').forEach(input => {
                     return;
                 }
             }
+        }
+    });
+});
+
+document.querySelectorAll('.command-input').forEach(input => {
+    input.addEventListener('keydown', function(e) {
+        const terminalType = this.getAttribute('data-terminal');
+        const history = commandHistory[terminalType];
+
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (history.position > 0) {
+                history.position--;
+                this.value = history.history[history.position];
+                // Move cursor to end of input
+                setTimeout(() => this.selectionStart = this.selectionEnd = this.value.length, 0);
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (history.position < history.history.length - 1) {
+                history.position++;
+                this.value = history.history[history.position];
+            } else if (history.position === history.history.length - 1) {
+                history.position++;
+                this.value = '';
+            }
+            // Move cursor to end of input
+            setTimeout(() => this.selectionStart = this.selectionEnd = this.value.length, 0);
         }
     });
 });
