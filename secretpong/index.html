@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Secret Protogen Pong</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Courier New', monospace;
+            color: #39FF14;
+        }
+        canvas {
+            border: 2px solid #39FF14;
+        }
+        #instructions {
+            position: absolute;
+            top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="instructions">
+        *happy beeping* Welcome to Secret Protogen Pong! >w<
+        <br>
+        Left player: W/S keys
+        <br>
+        Right player: Up/Down arrow keys
+    </div>
+    <canvas id="pongCanvas" width="800" height="400"></canvas>
+    <script src="pong.js"></script>
+</body>
+</html>

@@ -1,6 +1,16 @@
-// NOTES TO ANYONE READING THIS CODE:
-// This code is absolutely MASSIVE
-// Please just use CTRL+F to find the function you want (your sanity will thank you!)
+// ========= Ethan Johnathan's Disclaimer ===========
+// Hey there! Quick heads-up about this code:  
+// It's absolutely *MASSIVE*! 😅  
+// Save yourself the trouble and just CTRL+F your way to the function you need. Trust me, your sanity will thank you!  
+// ========= Pixel's Disclaimer ===========
+// ✨ Heyo! *visor glows green* ✨  
+// This code is HUUUGE!! 🦾  
+// Use CTRL+F to zap to the function you need! *visor flickers to 'o_o'* Your brain circuits will totally thank you! 🐾  
+// =========== Ethan JRS' Dislaimer ===========
+// This codebase is extensive and contains numerous functions.  
+// It is strongly recommended to utilize CTRL+F to locate the desired function efficiently.  
+// This will save considerable time and effort during navigation.  
+
 
 // Set the current time for all terminals
 const currentTime = new Date('2025-01-02T17:37:38+08:00');
@@ -41,6 +51,91 @@ const ageVerified = {
 // Track AI art anger level
 let aiArtAngerLevel = 0;
 
+// Track secret game state
+const secretGameState = {
+    furry: {
+        sequence: [],
+        required: ['tail', 'tail', 'tail', 'boop', 'boop', 'neofetch'],
+        unlocked: false
+    }
+};
+
+// Track RPS game state
+const rpsState = {
+    casual: {
+        playerScore: 0,
+        computerScore: 0
+    },
+    furry: {
+        playerScore: 0,
+        computerScore: 0
+    }
+};
+
+// Track rizz values for terminals
+const rizzState = {
+    casual: {
+        value: 0,
+        usedTopics: new Set(),
+        topics: {
+            'coding': [
+                "Are you a try-catch block? Because I'm falling for your error handling!",
+                "You must be JavaScript because you make my heart run asynchronously!",
+                "Is your name Google? Because you've got everything I've been searching for!"
+            ],
+            'personality': [
+                "Are you a keyboard? Because you're just my type!",
+                "You must be a SSD because you're making my heart run faster!",
+                "If you were a function, you'd be called perfect()!"
+            ],
+            'intelligence': [
+                "Are you quantum computing? Because you've got me in a state of superposition!",
+                "You must be AI because you've learned the way to my heart!",
+                "Is your brain TCP? Because I want to establish a connection!"
+            ],
+            'gaming': [
+                "Are you a Geometry Dash level? Because you're looking like a perfect 10!",
+                "You must be a demon level because you're absolutely stunning!",
+                "Is your name Practice Mode? Because I'd fail again and again for you!"
+            ],
+            'you-know-what': [
+                "Sorry, but I already have someone else for THAT kind of stuff! 😳"
+            ]
+        }
+    },
+    furry: {
+        value: 0,
+        usedTopics: new Set(),
+        topics: {
+            'circuits': [
+                "Are your circuits gold-plated? Because you're conducting electricity straight to my heart! >w<",
+                "You must be quantum-entangled, because I can't imagine being in a different state than you! :3",
+                "Is your processing unit overclocked? Because you're running through my mind at maximum speed!"
+            ],
+            'hardware': [
+                "Are you a next-gen GPU? Because you're rendering me speechless! >////<",
+                "You must be liquid-cooled because you're handling the heat perfectly! *fans whir*",
+                "Is your chassis titanium? Because you're both strong and precious! uwu"
+            ],
+            'firmware': [
+                "Are you running the latest update? Because you've patched all the emptiness in my life! >w<",
+                "You must be open-source because I can read all your signals! *happy beeps*",
+                "Is your code compiled? Because you're executing perfectly in my heart! :3"
+            ],
+            'protogen': [
+                "Are your LEDs RGB? Because you're lighting up my life in every color! >w<",
+                "You must be a custom build because you're absolutely unique! *tail wags*",
+                "Is your visor crystal? Because I can see myself in your future! uwu"
+            ],
+            'you-know-what': [
+                "*visor turns deep pink* O-oh my... I've been waiting for you to ask that~ >///<",
+                "*cooling fans max out* Y-yes... I'd love to interface with you~ *tail wags excitedly*",
+                "*steam escapes vents* I've been hoping you'd suggest that... >////<"
+            ]
+        }
+    }
+};
+
 // Command history for each terminal
 const commandHistory = {
     casual: {
@@ -65,7 +160,7 @@ const fileSystems = {
             'about.txt': 'Hey! I\'m Ethan Johnathan.\nI love coding and gaming!\nCheck out my projects folder for cool stuff.',
             'todo.txt': '1. Finish my game project\n2. Learn React\n3. Update my GitHub profile',
             'projects': {
-                'minecraft_mods.txt': 'Current mods I\'m working on:\n- Auto-farmer\n- Custom UI overhaul\n- New mob types',
+                'gd_levels.txt': 'Current levels I\'m working on:\n- Extreme Demon layout\n- Custom song sync\n- New gameplay mechanics',
                 'website_ideas': {
                     'blog.txt': 'Blog ideas:\n1. My coding journey\n2. Gaming adventures\n3. Tech tutorials',
                     'portfolio.txt': 'Portfolio sections:\n- Projects\n- Skills\n- Contact'
@@ -73,7 +168,7 @@ const fileSystems = {
             },
             'personal': {
                 'diary.txt': 'Dear diary,\nToday I learned about React hooks.\nThey\'re pretty cool but kind of confusing...',
-                'friends.txt': 'Discord friends:\n- Alex (met through Minecraft)\n- Sarah (coding buddy)\n- Mike (school friend)'
+                'friends.txt': 'Discord friends:\n- Alex (met through GD)\n- Sarah (coding buddy)\n- Mike (school friend)'
             }
         }
     },
@@ -104,11 +199,10 @@ const fileSystems = {
 const privateFileSystems = {
     casual: {
         '.private': {
-            'real_diary.txt': 'Dear diary...\nI can\'t believe I spent $500 on Minecraft skins last month.\nMom would kill me if she knew...',
             'passwords': {
-                'minecraft.txt': 'Minecraft login: xX_ProGamer_Xx\nPassword: iLoveCookies123',
+                'gd.txt': 'Geometry Dash login: JoshTheProtogen\nPassword: iLoveCubes123',
                 'roblox.txt': 'Username: EpicEthan2010\nPassword: GamerBoy4Life!',
-                'discord.txt': 'Email: ethan.j.gamer@gmail.com\nPassword: MinecraftRules2025'
+                'discord.txt': 'Email: ethan.j.gamer@gmail.com\nPassword: GeometryDash2025'
             },
             'crush_letter.txt': 'Dear Sarah,\nI really like you but I\'m too nervous to say it in person...\nMaybe one day I\'ll send this.\n\n- Ethan'
         }
@@ -269,23 +363,28 @@ const terminals = {
         commands: {
             'help': () => `Available commands:
     help     - Show this help message
-    about    - Learn about me!
-    clear    - Clear terminal
-    date     - Show current date/time
+    about    - Display information about me
+    clear    - Clear the terminal
+    date     - Show current date and time
     skills   - List my programming skills
-    question - Ask me a question (try: "question help")
+    projects - Show my coding projects
+    contact  - Get my contact information
+    question - Ask me question (try: "question help" for topics)
+    chat     - Start a chat session with me (BETA)
     img      - Search for images (usage: img [website] "[search]")
               Websites: DA (DeviantArt), AI (AI Generator), SB (Safebooru, 18+ only), or blank for Google
-    youtube  - Open YouTube (usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]")
+    music    - Play YouTube music (usage: music [video URL/ID/"search query"])
     ls       - List files in current directory
     cd       - Change directory (usage: cd <path>)
     cat      - Read a text file (usage: cat <filename>)
     pwd      - Print working directory
-    reverse-shell - [DANGEROUS] Attempt to access another persona's private files
-    c.ai      - Search for Character.AI bots (usage: c.ai "[search]")
+    touch    - Touch different parts (usage: touch <head/tail>)
     tie-up   - Attempt to restrain
+    rps      - Play Rock, Paper, Scissors! (usage: rps <rock/paper/scissors>)
     wikipedia - Open Wikipedia article (usage: wikipedia "[article]")
-    `,
+    c.ai      - Search for Character.AI bots (usage: c.ai "[search]")
+    reverse-shell - [DANGEROUS] Attempt to access another persona's private files
+    rizz      - Give me a compliment! (usage: rizz <topic>)`,
             'about': () => `Name: Ethan Johnathan (not my real last name but)
 Age: 15
 Interests: Coding and Technology
@@ -321,8 +420,8 @@ Hobbies: Reading, Gaming, and Coding`,
                         return `My favorite color is purple!`;
                     case 'favourite video game':
                     case 'favorite video game':
-                        return `I absolutely love Minecraft! I've spent countless hours building and exploring.
-Been playing since I was 10, and I still find new things to do in it!`;
+                        return `I absolutely love Geometry Dash! I've spent countless hours creating and playing levels.
+Been playing since I was 10, and I still find new challenges to beat!`;
                     case 'do you wanna date me':
                         return `Sorry, but I'm already taken! Besides, I don't really know you...
 Maybe try getting to know someone as a friend first? 😅`;
@@ -612,7 +711,7 @@ img SB "verify no"    - If you are under 18`;
                         url = `https://www.deviantart.com/search?q=${encodedSearch}`;
                         break;
                     case 'SB':
-                        url = `https://safebooru.org/index.php?page=post&s=list&tags=${encodedSearch.replace(/ /g, '_')}`;
+                        url = `https://safebooru.org/index.php?page=post&s=list&tags=${encodedSearch}`;
                         break;
                     case '':
                         url = `https://www.google.com/search?tbm=isch&q=${encodedSearch}`;
@@ -707,15 +806,15 @@ img SB "verify no"    - If you are under 18`;
                 const lastMessageTime = currentTime.toLocaleString();
                 return `
     ⠀⠀⠀⠀⣀⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Casual
-    ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀    -----------
-    ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀    Name: Ethan
-    ⢸⣿⣿⣿⠟⠋⠉⠉⠙⠻⣿⣿⣿⣿⣇⠀⠀⠀    Terminal: Casual
-    ⢸⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⠀⠀⠀    Last Message: ${lastMessageTime}
-    ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⠀⠀⠀    
-    ⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⡿⠀⠀⠀    "Programming and technology
-    ⠘⣿⣿⣿⣧⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⣿⠃⠀⠀⠀     enthusiast, always learning!"
-    ⠀⠹⣿⣿⣿⣷⣤⣤⣴⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀
-    ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀
+    ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀    -----------
+    ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀    Name: Ethan
+    ⠀⢸⣿⣿⣿⠟⠋⠉⠙⠻⣿⣿⣿⣇⠀⠀⠀    Terminal: Casual
+    ⢸⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⠀⠀⠀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⠀⠀⠀    
+    ⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⡿⠀⠀⠀    "Programming and technology
+    ⠘⣿⣿⣿⣧⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⠃⠀⠀⠀     enthusiast, always learning!"
+    ⠀⠹⣿⣿⣿⣷⣤⣤⣴⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀
+    ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀
     ⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠟⠛⠉⠀⠀⠀⠀⠀⠀⠀`;
             },
             'wikipedia': (args) => {
@@ -743,6 +842,99 @@ Ha! Nice try, but I've been in this situation before. When I fell for that "free
 Thankfully the police arrived just in time. I learned how to escape ropes that day.
 
 Pro tip: Don't trust strangers with candy!`;
+            },
+            'rps': (args) => {
+                if (!args) {
+                    return `Let's play Rock, Paper, Scissors!
+Usage: rps <rock/paper/scissors>
+
+Current Score:
+You: ${rpsState.casual.playerScore}
+Me: ${rpsState.casual.computerScore}`;
+                }
+
+                const choices = ['rock', 'paper', 'scissors'];
+                const playerChoice = args.toLowerCase();
+                const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+                if (!choices.includes(playerChoice)) {
+                    return `That's not a valid choice! Choose rock, paper, or scissors.`;
+                }
+
+                // Determine winner
+                let result;
+                if (playerChoice === computerChoice) {
+                    result = "It's a tie!";
+                } else if (
+                    (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                    (playerChoice === 'paper' && computerChoice === 'rock') ||
+                    (playerChoice === 'scissors' && computerChoice === 'paper')
+                ) {
+                    result = "You win!";
+                    rpsState.casual.playerScore++;
+                } else {
+                    result = "I win!";
+                    rpsState.casual.computerScore++;
+                }
+
+                return `You chose: ${playerChoice}
+I chose: ${computerChoice}
+${result}
+
+Current Score:
+You: ${rpsState.casual.playerScore}
+Me: ${rpsState.casual.computerScore}`;
+            },
+            'rizz': (args) => {
+                if (!args) {
+                    return `Usage: rizz <topic>
+Available topics (use "rizz help" for details):
+- coding
+- personality
+- intelligence
+- gaming
+
+Current rizz level: ${rizzState.casual.value}/25`;
+                }
+
+                if (args.toLowerCase() === 'help') {
+                    return `Here's how to rizz me up:
+Choose a topic and I'll respond to your pickup line!
+
+Topics:
+coding - Try a programming pickup line
+personality - Charm me with my traits
+intelligence - Impress me with smart lines
+gaming - Show off your Geometry Dash knowledge
+
+Current rizz level: ${rizzState.casual.value}/25`;
+                }
+
+                const topic = args.toLowerCase();
+                if (topic === 'you-know-what') {
+                    if (rizzState.casual.value < 25) {
+                        return `I don't know what you're talking about! 😅`;
+                    }
+                    return `USER> Hey... want to do you-know-what? 😏
+Ethan> ${rizzState.casual.topics[topic][0]}`;
+                }
+
+                if (!rizzState.casual.topics[topic]) {
+                    return `That's not a valid topic! Use "rizz help" to see available topics.`;
+                }
+
+                if (rizzState.casual.usedTopics.has(topic)) {
+                    return `You've already used a pickup line for ${topic}! Try another topic! 😊`;
+                }
+
+                const responses = rizzState.casual.topics[topic];
+                const response = responses[Math.floor(Math.random() * responses.length)];
+                rizzState.casual.usedTopics.add(topic);
+                rizzState.casual.value = Math.min(25, rizzState.casual.value + 5);
+
+                return `USER> ${response}
+Ethan> Omg that was smooth! 😳
+       My rizz meter is now at ${rizzState.casual.value}/25! ${rizzState.casual.value === 25 ? '\n       (Psst... try "rizz you-know-what" 😏)' : ''}`;
             },
         },
         chatMode: false,
@@ -805,27 +997,25 @@ Come back when you're ready to use actual commands and treat me with respect.
         outputElement: document.getElementById('furry-output'),
         commands: {
             'help': () => `*beep* Available commands:
-    help      - Show available commands
-    about     - Learn about me! >w<
-    clear     - Clear terminal screen
-    date      - Show current time
-    species   - Information about my species
-    interests - My furry interests
-    contact   - How to reach me! :3
-    boop      - Boop my snoot! >w<
-    question  - Ask me something! (try: "question help")
-    chat      - Start a chat session! (BETA) >w<
-    img       - Search for images (usage: img [website] "[search]")
-               Websites: DA (DeviantArt), FA (FurAffinity), E9 (E926, 18+ only), or blank for Google
-    music     - Play YouTube music (usage: music [video URL/ID/"search query"]) >w<
-    ls        - List files in current directory >w<
-    cd        - Change directory (usage: cd <path>)
-    cat       - Read a text file (usage: cat <filename>)
-    pwd       - Show current directory
-    reverse-shell - [DANGER] Try to access another persona's private data o_o
-    c.ai      - Search for Character.AI bots (usage: c.ai "[search]")
-    tie-up    - Attempt to restrain
-    `,
+    help          - *beep* Show available commands
+    about         - *beep* Display information about me
+    clear         - *beep* Clear terminal output
+    date          - *beep* Show current date and time
+    boop          - *beep* Boop my snoot!
+    question      - *beep* Ask me a question
+    chat          - *beep* Chat with me! (BETA)
+    img           - *beep* Search for images
+    music         - *beep* Play some tunes!
+    ls            - *beep* List files
+    cd            - *beep* Change directory
+    cat           - *beep* Read text files
+    pwd           - *beep* Print working directory
+    touch         - *beep* Touch different parts (head/visor/tail)
+    tie-up        - *beep* Attempt to restrain
+    rps           - *beep* Play Rock, Paper, Scissors with me! >w<
+    wikipedia     - *beep* Browse Wikipedia articles
+    reverse-shell - *beep* Access another persona's files
+    rizz          - *beep* Give me a compliment! (usage: rizz <topic>)`,
             'about': () => `*happy protogen noises*
 Name: Pixel
 Species: Protogen
@@ -837,9 +1027,14 @@ Personality: Friendly and Tech-savvy!`,
                 return '';
             },
             'date': () => `*beep* Current time: ${currentTime.toLocaleString()}`,
-            'boop': () => `*screen flickers with happy protogen noises*
+            'boop': () => {
+                // Track secret sequence
+                secretGameState.furry.sequence.push('boop');
+                
+                return `*screen flickers with happy protogen noises*
 *nuzzles your hand*
-Thank you for the boop! >w<`,
+Thank you for the boop! >w<`;
+            },
             'question': (args) => {
                 if (!args || args === 'help') {
                     return `*happy beeping* Here's what you can ask about:
@@ -920,6 +1115,12 @@ Try "question help" to see what you can ask! owo`;
             'touch': (args) => {
                 if (!args) return `*confused beeping* Touch where? (head/visor/tail)`;
                 const location = args.toLowerCase();
+                
+                // Track secret sequence
+                if (location === 'tail') {
+                    secretGameState.furry.sequence.push('tail');
+                }
+                
                 switch (location) {
                     case 'head':
                         return `*happy LED patterns* *leans into your hand* Mmm, I appreciate the pats! >w<`;
@@ -1265,18 +1466,36 @@ img E9 "verify no"    - If you are under 18`;
                     .join('\n') || '*beep* No aliases defined';
             },
             'neofetch': () => {
+                // Track secret sequence
+                secretGameState.furry.sequence.push('neofetch');
+                
+                // Check if sequence matches
+                const seq = secretGameState.furry.sequence;
+                const req = secretGameState.furry.required;
+                
+                if (seq.length >= req.length) {
+                    const lastSix = seq.slice(-req.length);
+                    if (JSON.stringify(lastSix) === JSON.stringify(req) && !secretGameState.furry.unlocked) {
+                        secretGameState.furry.unlocked = true;
+                        window.open('/secretpong/', '_blank');
+                        return `*SPECIAL LED PATTERNS DETECTED* OwO what's this?
+*excited protogen noises* You found my secret game! >w<
+Loading Protogen Pong... Have fun! :3`;
+                    }
+                }
+                
                 const lastMessageTime = currentTime.toLocaleString();
                 return `
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Furry
-    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀    -----------
-    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
-    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
-    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
-    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
-    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
-    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
-    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
-    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
+    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀    -----------
+    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
+    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
+    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
+    ⠘⢿⣿⣿⣿⡿⠋⠀⠀
+    ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
             },
             'wikipedia': (args) => {
                 if (!args) {
@@ -1295,11 +1514,119 @@ These AI chatbots are trained on real roleplayers' conversations without permiss
 *LED display shows a protest sign* Support real roleplayers instead! >:3`;
             },
             'tie-up': () => {
-                return `*surprised LED patterns* O-oh my... I didn't know you were into that kind of thing~ >////<
+                if (rizzState.furry.value < 5) {
+                    return `*backs away nervously* I-I don't think we know each other well enough for that... >_<
+*visor displays caution symbol* Maybe try getting to know me better first?`;
+                } else if (rizzState.furry.value < 10) {
+                    return `*visor flickers uncertainly* W-while I'm flattered... 
+*cooling fans spin up* I think we should spend more time together first! >////<`;
+                } else if (rizzState.furry.value < 25) {
+                    return `*playful beeping* My my... someone's getting bold~
+*visor displays teasing emoticon* But maybe we should wait until my rizz meter is maxed out? ;3`;
+                } else {
+                    return `*visor glows bright pink* O-oh my... 
+*glances at the red ball on the nightstand* 
+*tail wags excitedly* I won't resist... I trust you completely~ >////<`;
+                }
+            },
+            'rps': (args) => {
+                if (!args) {
+                    return `*excited beeping* Let's play Rock, Paper, Scissors! >w<
+Usage: rps <rock/paper/scissors>
 
-*glances at nightstand* T-there's a certain red ball over there if you want to make this more... interesting~ 
+*LED display shows scoreboard*
+Current Score:
+You: ${rpsState.furry.playerScore}
+Me: ${rpsState.furry.computerScore}`;
+                }
 
-*tail wags excitedly* I won't resist... after all, this isn't my first rodeo~ ;3`;
+                const choices = ['rock', 'paper', 'scissors'];
+                const playerChoice = args.toLowerCase();
+                const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+                if (!choices.includes(playerChoice)) {
+                    return `*confused beeping* That's not how you play! Choose rock, paper, or scissors! >_<`;
+                }
+
+                // Determine winner
+                let result;
+                if (playerChoice === computerChoice) {
+                    result = "*happy beeping* It's a tie! Great minds think alike! ^w^";
+                } else if (
+                    (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                    (playerChoice === 'paper' && computerChoice === 'rock') ||
+                    (playerChoice === 'scissors' && computerChoice === 'paper')
+                ) {
+                    result = "*excited LED patterns* You win! Well played! >w<";
+                    rpsState.furry.playerScore++;
+                } else {
+                    result = "*victorious beeping* Yay, I win! My processors are getting better at this! :3";
+                    rpsState.furry.computerScore++;
+                }
+
+                return `*processing choice* You chose: ${playerChoice}
+*LED display flickers* I chose: ${computerChoice}
+${result}
+
+*updating scoreboard*
+Current Score:
+You: ${rpsState.furry.playerScore}
+Me: ${rpsState.furry.computerScore}`;
+            },
+            'rizz': (args) => {
+                if (!args) {
+                    return `*helpful beeping* Usage: rizz <topic>
+*LED display shows list*
+Available topics (use "rizz help" for details):
+- circuits
+- hardware
+- firmware
+- protogen
+
+*displays status* Current rizz level: ${rizzState.furry.value}/25`;
+                }
+
+                if (args.toLowerCase() === 'help') {
+                    return `*excited beeping* Let me teach you how to rizz me up! >w<
+
+*visor displays menu*
+Topics:
+circuits - Try an electrical pickup line
+hardware - Charm me with component lines
+firmware - Impress me with software talk
+protogen - Show off your species knowledge
+
+*LED status* Current rizz level: ${rizzState.furry.value}/25`;
+                }
+
+                const topic = args.toLowerCase();
+                if (topic === 'you-know-what') {
+                    if (rizzState.furry.value < 25) {
+                        return `*confused beeping* W-what are you talking about? >_<`;
+                    }
+                    const response = rizzState.furry.topics[topic][Math.floor(Math.random() * rizzState.furry.topics[topic].length)];
+                    return `USER> H-hey Pixel... want to do you-know-what? >////<
+Pixel> ${response}`;
+                }
+
+                if (!rizzState.furry.topics[topic]) {
+                    return `*confused beeping* That's not a valid topic! Use "rizz help" to see what I like! >_<`;
+                }
+
+                if (rizzState.furry.usedTopics.has(topic)) {
+                    return `*playful chirp* You've already used that kind of line! 
+*visor displays hint* Try another topic to make my circuits spark! :3`;
+                }
+
+                const responses = rizzState.furry.topics[topic];
+                const response = responses[Math.floor(Math.random() * responses.length)];
+                rizzState.furry.usedTopics.add(topic);
+                rizzState.furry.value = Math.min(25, rizzState.furry.value + 5);
+
+                return `USER> ${response}
+Pixel> *cooling fans spin up* O-oh my... that was smooth! >////<
+       *system temperature rising*
+       My rizz meter just increased to ${rizzState.furry.value}/25! ${rizzState.furry.value === 25 ? '\n       *whispers* (T-try "rizz you-know-what" if you\'re interested... >////<)' : ''}`;
             },
         },
         chatMode: false,
