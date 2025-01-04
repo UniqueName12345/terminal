@@ -281,7 +281,11 @@ const terminals = {
     cd       - Change directory (usage: cd <path>)
     cat      - Read a text file (usage: cat <filename>)
     pwd      - Print working directory
-    reverse-shell - [DANGEROUS] Attempt to access another persona's private files`,
+    reverse-shell - [DANGEROUS] Attempt to access another persona's private files
+    c.ai      - Search for Character.AI bots (usage: c.ai "[search]")
+    tie-up   - Attempt to restrain
+    wikipedia - Open Wikipedia article (usage: wikipedia "[article]")
+    `,
             'about': () => `Name: Ethan Johnathan (not my real last name but)
 Age: 15
 Interests: Coding and Technology
@@ -702,10 +706,10 @@ img SB "verify no"    - If you are under 18`;
             'neofetch': () => {
                 const lastMessageTime = currentTime.toLocaleString();
                 return `
-    ⠀⠀⠀⠀⣀⣤⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Casual
-    ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀    -----------
-    ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀    Name: Ethan
-    ⢸⣿⣿⣿⠟⠋⠉⠉⠙⠻⣿⣿⣿⣿⣿⣇⠀⠀⠀    Terminal: Casual
+    ⠀⠀⠀⠀⣀⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Casual
+    ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀    -----------
+    ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀    Name: Ethan
+    ⢸⣿⣿⣿⠟⠋⠉⠉⠙⠻⣿⣿⣿⣿⣇⠀⠀⠀    Terminal: Casual
     ⢸⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⠀⠀⠀    Last Message: ${lastMessageTime}
     ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⠀⠀⠀    
     ⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⡿⠀⠀⠀    "Programming and technology
@@ -722,6 +726,23 @@ img SB "verify no"    - If you are under 18`;
                 const article = encodeURIComponent(args.replace(/^["']|["']$/g, ''));
                 window.open(`https://wikipedia.org/wiki/${article}`, '_blank');
                 return `Opening Wikipedia article for "${args}" in a new tab!`;
+            },
+            'c.ai': (args) => {
+                if (!args) {
+                    window.open('https://c.ai/search', '_blank');
+                    return 'Opening Character.AI search page!';
+                }
+                const search = encodeURIComponent(args.replace(/^["']|["']$/g, ''));
+                window.open(`https://c.ai/search?q=${search}`, '_blank');
+                return `Searching for "${args}" on Character.AI!`;
+            },
+            'tie-up': () => {
+                return `*quickly unties self*
+
+Ha! Nice try, but I've been in this situation before. When I fell for that "free candy" van trick...
+Thankfully the police arrived just in time. I learned how to escape ropes that day.
+
+Pro tip: Don't trust strangers with candy!`;
             },
         },
         chatMode: false,
@@ -801,7 +822,10 @@ Come back when you're ready to use actual commands and treat me with respect.
     cd        - Change directory (usage: cd <path>)
     cat       - Read a text file (usage: cat <filename>)
     pwd       - Show current directory
-    reverse-shell - [DANGER] Try to access another persona's private data o_o`,
+    reverse-shell - [DANGER] Try to access another persona's private data o_o
+    c.ai      - Search for Character.AI bots (usage: c.ai "[search]")
+    tie-up    - Attempt to restrain
+    `,
             'about': () => `*happy protogen noises*
 Name: Pixel
 Species: Protogen
@@ -1244,15 +1268,15 @@ img E9 "verify no"    - If you are under 18`;
                 const lastMessageTime = currentTime.toLocaleString();
                 return `
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Furry
-    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀    -----------
-    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
-    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
-    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
-    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
-    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
-    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
-    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
-    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
+    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀    -----------
+    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
+    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
+    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
+    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
+    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
             },
             'wikipedia': (args) => {
                 if (!args) {
@@ -1262,6 +1286,20 @@ img E9 "verify no"    - If you are under 18`;
                 const article = encodeURIComponent(args.replace(/^["']|["']$/g, ''));
                 window.open(`https://wikipedia.org/wiki/${article}`, '_blank');
                 return `*happy beeping* Opening Wikipedia article about "${args}"! >w<`;
+            },
+            'c.ai': () => {
+                return `*angry protogen noises* >:c
+
+I don't support AI roleplayers! They're just like AI "artists" who steal from real artists to make their "art"! 
+These AI chatbots are trained on real roleplayers' conversations without permission!
+*LED display shows a protest sign* Support real roleplayers instead! >:3`;
+            },
+            'tie-up': () => {
+                return `*surprised LED patterns* O-oh my... I didn't know you were into that kind of thing~ >////<
+
+*glances at nightstand* T-there's a certain red ball over there if you want to make this more... interesting~ 
+
+*tail wags excitedly* I won't resist... after all, this isn't my first rodeo~ ;3`;
             },
         },
         chatMode: false,
@@ -1335,7 +1373,9 @@ Please reflect on how to properly treat your local protogen...
     skills       - Technical skills
     experience   - Work experience
     education    - Educational background
-    contact      - Professional contact information`,
+    contact      - Professional contact information
+    c.ai         - Search for Character.AI bots (usage: c.ai "[search]")
+    `,
             'about': () => `Professional Profile:
 Name: Ethan JRS
 Position: Student Developer
@@ -1353,7 +1393,10 @@ Location: Remote`,
     2. My Github Account (UniqueAccount12345)
     3. My Scratch Account (DifferentDance8)`,
             'contact': () => `Professional Email: ethan_jrs@proton.me
-For game development inquiries and professional work.`
+For game development inquiries and professional work.`,
+            'c.ai': () => {
+                return `I prefer to maintain a professional demeanor. Using AI roleplaying services would not be appropriate in a professional context.`;
+            },
         },
         notFoundMessage: (cmd) => `Error: Command '${cmd}' not recognized. Please use 'help' to view available commands.`
     }
