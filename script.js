@@ -256,6 +256,7 @@ const terminals = {
     cat      - Read a text file (usage: cat <filename>)
     pwd      - Print working directory
     touch    - Touch different parts (usage: touch <head/tail>)
+    wikipedia - Open Wikipedia article (usage: wikipedia "[article]")
     reverse-shell - [DANGEROUS] Attempt to access another persona's private files`,
             'about': () => `Name: Ethan Johnathan (not my real last name but)
 Age: 15
@@ -634,6 +635,15 @@ These extensions significantly improve the YouTube Music experience!`);
 
                 return `Invalid video URL or ID. Please provide a valid YouTube URL, video ID, or search query.`;
             },
+            'wikipedia': (args) => {
+                if (!args) {
+                    window.open('https://wikipedia.org/wiki/Main_Page', '_blank');
+                    return 'Opening Wikipedia Main Page in a new tab!';
+                }
+                const article = encodeURIComponent(args.replace(/^["']|["']$/g, ''));
+                window.open(`https://wikipedia.org/wiki/${article}`, '_blank');
+                return `Opening Wikipedia article for "${args}" in a new tab!`;
+            },
         },
         chatMode: false,
         handleChat: (input) => {
@@ -695,25 +705,22 @@ Come back when you're ready to use actual commands and treat me with respect.
         outputElement: document.getElementById('furry-output'),
         commands: {
             'help': () => `*beep* Available commands:
-    help      - Show available commands
-    about     - Learn about me! >w<
-    clear     - Clear terminal screen
-    date      - Show current time
-    species   - Information about my species
-    interests - My furry interests
-    contact   - How to reach me! :3
-    boop      - Boop my snoot! >w<
-    question  - Ask me something! (try: "question help")
-    chat      - Start a chat session! (BETA) >w<
-    img       - Search for images (usage: img [website] "[search]")
-               Websites: DA (DeviantArt), FA (FurAffinity), E9 (E926, 18+ only), or blank for Google
-    music     - Play YouTube music (usage: music [video URL/ID/"search query"]) >w<
-    ls        - List files in current directory >w<
-    cd        - Change directory (usage: cd <path>)
-    cat       - Read a text file (usage: cat <filename>)
-    pwd       - Show current directory
-    touch     - Touch different parts (head/visor/tail)
-    reverse-shell - [DANGER] Try to access another persona's private data o_o`,
+    help          - *beep* Show available commands
+    about         - *beep* Display information about me
+    clear         - *beep* Clear terminal output
+    date          - *beep* Show current date and time
+    boop          - *beep* Boop my snoot!
+    question      - *beep* Ask me a question
+    chat          - *beep* Chat with me! (BETA)
+    img           - *beep* Search for images
+    music         - *beep* Play some tunes!
+    ls            - *beep* List files
+    cd            - *beep* Change directory
+    cat           - *beep* Read text files
+    pwd           - *beep* Print working directory
+    touch         - *beep* Touch different parts (head/visor/tail)
+    wikipedia     - *beep* Browse Wikipedia articles
+    reverse-shell - *beep* Access another persona's files`,
             'about': () => `*happy protogen noises*
 Name: Pixel
 Species: Protogen
@@ -725,14 +732,6 @@ Personality: Friendly and Tech-savvy!`,
                 return '';
             },
             'date': () => `*beep* Current time: ${currentTime.toLocaleString()}`,
-            'species': () => `Protogens are a closed species of cyborg creatures!
-We're part organic and part mechanical.
-I have a LED screen face that can display emotes! ^w^`,
-            'interests': () => `My Furry Interests:
-    • Furry Gaming
-    • Tech and Programming
-    • Making Beep Boop Sounds :3`,
-            'contact': () => `To contact Pixel, use my casual Discord (yet_another_account123) and prefix your DMs with "{P}: "`,
             'boop': () => `*screen flickers with happy protogen noises*
 *nuzzles your hand*
 Thank you for the boop! >w<`,
@@ -1125,6 +1124,15 @@ My circuits run much smoother with these installed! *happy LED patterns*`);
 
                 return `*confused beeping* Invalid video URL or ID... Please provide a valid YouTube URL, video ID, or search query! >_<`;
             },
+            'wikipedia': (args) => {
+                if (!args) {
+                    window.open('https://wikipedia.org/wiki/Category:Furry_fandom', '_blank');
+                    return '*excited beeping* Opening the Furry Fandom article on Wikipedia! OwO';
+                }
+                const article = encodeURIComponent(args.replace(/^["']|["']$/g, ''));
+                window.open(`https://wikipedia.org/wiki/${article}`, '_blank');
+                return `*happy beeping* Opening Wikipedia article about "${args}"! >w<`;
+            },
         },
         chatMode: false,
         handleChat: (input) => {
@@ -1190,14 +1198,19 @@ Please reflect on how to properly treat your local protogen...
         outputElement: document.getElementById('professional-output'),
         commands: {
             'help': () => `Available commands:
-    help         - Display command list
-    about        - Professional profile
-    clear        - Clear terminal
-    date         - Current date and time
-    skills       - Technical skills
-    experience   - Work experience
-    education    - Educational background
-    contact      - Professional contact information`,
+    help          - Show this help message
+    about         - Display information about me
+    clear         - Clear terminal output
+    date          - Show current date and time
+    skills        - List my technical skills
+    projects      - Show my professional projects
+    contact       - Get my contact information
+    ls            - List files in current directory
+    cd            - Change directory
+    cat           - Read a text file
+    pwd           - Print working directory
+    wikipedia     - Browse Wikipedia articles
+    reverse-shell - Access another persona's files`,
             'about': () => `Professional Profile:
 Name: Ethan JRS
 Position: Student Developer
@@ -1210,16 +1223,66 @@ Location: Remote`,
             'date': () => currentTime.toLocaleString(),
             'skills': () => `Technical Skills:
     • Video Game Engine (Unity and Unreal Engine)`,
-            'experience': () => `Work Experience:
-    • Personal Projects Development
-    • Open Source Contributions (In Progress)
-    • Self-Directed Learning`,
-            'education': () => `Education:
-    • Self-taught Programming
-    • Online Courses
-    • Continuous Learning`,
+            'projects': () => `My Projects:
+    1. This Terminal Website
+    2. My Github Account (UniqueAccount12345)
+    3. My Scratch Account (DifferentDance8)`,
             'contact': () => `Professional Email: ethan_jrs@proton.me
-For game development inquiries and professional work.`
+For game development inquiries and professional work.`,
+            'pwd': () => fileSystems.professional.currentPath,
+            'ls': () => {
+                const current = getCurrentDirectory('professional');
+                let output = '';
+                
+                for (const [name, content] of Object.entries(current)) {
+                    if (typeof content === 'object') {
+                        output += `📁 ${name}/\n`;
+                    } else {
+                        output += `📄 ${name}\n`;
+                    }
+                }
+                
+                return output || 'Empty directory';
+            },
+            'cd': (args) => {
+                if (!args) return 'Usage: cd <path>';
+                
+                const newPath = resolvePath('professional', args);
+                let current = fileSystems.professional.root;
+                const pathParts = newPath.split('/').filter(Boolean);
+                
+                for (const part of pathParts) {
+                    if (!current[part] || typeof current[part] !== 'object') {
+                        return `cd: ${args}: No such directory`;
+                    }
+                    current = current[part];
+                }
+                
+                fileSystems.professional.currentPath = newPath;
+                return '';
+            },
+            'cat': (args) => {
+                if (!args) return 'Usage: cat <filename>';
+                
+                const current = getCurrentDirectory('professional');
+                if (!current[args]) {
+                    return `cat: ${args}: No such file`;
+                }
+                if (typeof current[args] === 'object') {
+                    return `cat: ${args}: Is a directory`;
+                }
+                
+                return current[args];
+            },
+            'wikipedia': (args) => {
+                if (!args) {
+                    window.open('https://wikipedia.org/wiki/Portal:Computer_programming', '_blank');
+                    return 'Opening Computer Programming Portal on Wikipedia.';
+                }
+                const article = encodeURIComponent(args.replace(/^["']|["']$/g, ''));
+                window.open(`https://wikipedia.org/wiki/${article}`, '_blank');
+                return `Opening Wikipedia article: "${args}".`;
+            },
         },
         notFoundMessage: (cmd) => `Error: Command '${cmd}' not recognized. Please use 'help' to view available commands.`
     }
