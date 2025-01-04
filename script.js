@@ -806,27 +806,31 @@ Me: ${rpsState.casual.computerScore}`;
             },
             'rizz': (args) => {
                 if (!args) {
-                    return `Usage: rizz <topic>
-Available topics (use "rizz help" for details):
-- coding
+                    const topics = `- coding
 - personality
 - intelligence
 - gaming
-- music
+- music${rizzState.casual.value >= 25 ? '\n- you-know-what 😏' : ''}`;
+
+                    return `Usage: rizz <topic>
+Available topics (use "rizz help" for details):
+${topics}
 
 Current rizz level: ${rizzState.casual.value}/25`;
                 }
 
                 if (args.toLowerCase() === 'help') {
+                    const topics = `coding - Try a programming pickup line
+personality - Charm me with my traits
+intelligence - Impress me with smart lines
+gaming - Show off your Geometry Dash knowledge
+music - Serenade me with rhythm game lines${rizzState.casual.value >= 25 ? '\nyou-know-what - Try something more... intimate 😏' : ''}`;
+
                     return `Here's how to rizz me up:
 Choose a topic and I'll respond to your pickup line!
 
 Topics:
-coding - Try a programming pickup line
-personality - Charm me with my traits
-intelligence - Impress me with smart lines
-gaming - Show off your Geometry Dash knowledge
-music - Serenade me with rhythm game lines
+${topics}
 
 Current rizz level: ${rizzState.casual.value}/25`;
                 }
@@ -1412,12 +1416,12 @@ Loading Protogen Pong... Have fun! :3`;
     ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣷⡀⠀⠀⠀    -----------
     ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
     ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
-    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
-    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
-    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
-    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
+    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
     ⠘⢿⣿⣿⣿⡿⠋⠀⠀
-    ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
+    ⠀⠀⠙⢿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
             },
             'wikipedia': (args) => {
                 if (!args) {
@@ -1497,28 +1501,32 @@ Me: ${rpsState.furry.computerScore}`;
             },
             'rizz': (args) => {
                 if (!args) {
-                    return `*helpful beeping* Usage: rizz <topic>
-*LED display shows list*
-Available topics (use "rizz help" for details):
-- circuits
+                    const topics = `- circuits
 - hardware
 - firmware
 - protogen
-- synth
+- synth${rizzState.furry.value >= 25 ? '\n- you-know-what >////<' : ''}`;
+
+                    return `*helpful beeping* Usage: rizz <topic>
+*LED display shows list*
+Available topics (use "rizz help" for details):
+${topics}
 
 *displays status* Current rizz level: ${rizzState.furry.value}/25`;
                 }
 
                 if (args.toLowerCase() === 'help') {
+                    const topics = `circuits - Try an electrical pickup line
+hardware - Charm me with component lines
+firmware - Impress me with software talk
+protogen - Show off your species knowledge
+synth - Harmonize with my audio systems${rizzState.furry.value >= 25 ? '\nyou-know-what - Try something more... private~ >////<' : ''}`;
+
                     return `*excited beeping* Let me teach you how to rizz me up! >w<
 
 *visor displays menu*
 Topics:
-circuits - Try an electrical pickup line
-hardware - Charm me with component lines
-firmware - Impress me with software talk
-protogen - Show off your species knowledge
-synth - Harmonize with my audio systems
+${topics}
 
 *LED status* Current rizz level: ${rizzState.furry.value}/25`;
                 }
