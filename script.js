@@ -1,3 +1,7 @@
+// NOTES TO ANYONE READING THIS CODE:
+// This code is absolutely MASSIVE
+// Please just use CTRL+F to find the function you want (your sanity will thank you!)
+
 // Set the current time for all terminals
 const currentTime = new Date('2025-01-02T17:37:38+08:00');
 document.querySelectorAll('[id$="-time"]').forEach(el => {
@@ -32,6 +36,25 @@ const youtubeRecommendationShown = {
 const ageVerified = {
     casual: false,
     furry: false
+};
+
+// Track AI art anger level
+let aiArtAngerLevel = 0;
+
+// Command history for each terminal
+const commandHistory = {
+    casual: {
+        history: [],
+        position: -1
+    },
+    furry: {
+        history: [],
+        position: -1
+    },
+    professional: {
+        history: [],
+        position: -1
+    }
 };
 
 // File system simulation
@@ -130,6 +153,18 @@ P.S. If you're seeing this... well done on finding this easter egg! 🥚`,
     }
 };
 
+// Chat data storage
+let chatData = {
+    casual: null,
+    furry: null
+};
+
+// Alias storage
+const aliases = {
+    casual: { 'cls': 'clear' },
+    furry: { 'cls': 'clear' }
+};
+
 // Helper function to get current directory object
 function getCurrentDirectory(terminal) {
     if (reverseShellState.activeShell) {
@@ -214,12 +249,6 @@ function resolveShellPath(path) {
     return reverseShellState.shellCurrentPath + '/' + path;
 }
 
-// Chat data storage
-let chatData = {
-    casual: null,
-    furry: null
-};
-
 // Load chat data function
 async function loadChatData(persona) {
     try {
@@ -240,23 +269,18 @@ const terminals = {
         commands: {
             'help': () => `Available commands:
     help     - Show this help message
-    about    - Display information about me
-    clear    - Clear the terminal
-    date     - Show current date and time
+    about    - Learn about me!
+    clear    - Clear terminal
+    date     - Show current date/time
     skills   - List my programming skills
-    projects - Show my coding projects
-    contact  - Get my contact information
-    question - Ask me question (try: "question help" for topics)
-    chat     - Start a chat session with me (BETA)
+    question - Ask me a question (try: "question help")
     img      - Search for images (usage: img [website] "[search]")
               Websites: DA (DeviantArt), AI (AI Generator), SB (Safebooru, 18+ only), or blank for Google
-    music    - Play YouTube music (usage: music [video URL/ID/"search query"])
+    youtube  - Open YouTube (usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]")
     ls       - List files in current directory
     cd       - Change directory (usage: cd <path>)
     cat      - Read a text file (usage: cat <filename>)
     pwd      - Print working directory
-    touch    - Touch different parts (usage: touch <head/tail>)
-    wikipedia - Open Wikipedia article (usage: wikipedia "[article]")
     reverse-shell - [DANGEROUS] Attempt to access another persona's private files`,
             'about': () => `Name: Ethan Johnathan (not my real last name but)
 Age: 15
@@ -560,6 +584,20 @@ img SB "verify no"    - If you are under 18`;
                     return `Opening Gelbooru search for "${search}"...`;
                 }
 
+                // Handle AI art website
+                if (website === 'AI') {
+                    aiArtAngerLevel++;
+                    const responses = [
+                        `*angry protogen noises* I don't support dedicated AI art sites! >:c\nIt takes jobs away from real artists and uses their work without permission!\nPlease use DA (with -ai to exclude AI art) or Google to find real art made by real artists! >w<`,
+                        `*VERY angry protogen noises* I ALREADY TOLD YOU I DON'T SUPPORT AI ART! >:C\nIt's literally theft of artists' work and livelihoods!\nUse DA or Google and support REAL artists! >:C`,
+                        `*FURIOUS protogen screeching* WHY DO YOU KEEP ASKING ABOUT AI ART?! >:CCC\nIt's STEALING from artists and DESTROYING their careers!\nI WILL NOT help you find AI art! Use DA or Google for REAL art by REAL artists! >:CCC`,
+                        `*nuclear protogen meltdown* I AM NOT HELPING YOU FIND AI ART!!!\nSTOP. ASKING. ABOUT. AI. ART!!! >:CCCC\nReal artists deserve respect and fair compensation!\nDA or Google. REAL ARTISTS ONLY. NO AI!!!`,
+                        `*protogen.exe has stopped working* BEEP BOOP ERROR ERROR\nAI ART REQUEST DETECTED\nINITIATING TOTAL SYSTEM MELTDOWN\n>:CCCCC NO AI ART EVER!!!`
+                    ];
+                    const angerIndex = Math.min(aiArtAngerLevel - 1, responses.length - 1);
+                    return responses[angerIndex] + '\n\n*helpful beeping* Example: img DA "cute cat"';
+                }
+
                 // Encode the search query
                 const encodedSearch = encodeURIComponent(search);
 
@@ -568,9 +606,6 @@ img SB "verify no"    - If you are under 18`;
                 switch (website) {
                     case 'DA':
                         url = `https://www.deviantart.com/search?q=${encodedSearch}`;
-                        break;
-                    case 'AI':
-                        url = `https://lexica.art/?q=${encodedSearch}`;
                         break;
                     case 'SB':
                         url = `https://safebooru.org/index.php?page=post&s=list&tags=${encodedSearch.replace(/ /g, '_')}`;
@@ -586,54 +621,98 @@ img SB "verify no"    - If you are under 18`;
                 window.open(url, '_blank');
                 return `Opening ${website || 'Google Images'} search for "${search}"...`;
             },
-            'music': (args) => {
+            'youtube': (args) => {
                 if (!args) {
-                    return `Usage: music [video URL/ID/"search query"]
-
-Examples:
-  music dQw4w9WgXcQ                     - Play by video ID
-  music https://youtu.be/dQw4w9WgXcQ    - Play by URL
-  music "never gonna give you up"        - Search and play first result`;
+                    return 'Usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]"\nExample: youtube "cute cats" or youtube channel "@markiplier"';
                 }
 
-                // Show extension recommendation first time
-                if (!youtubeRecommendationShown.casual) {
-                    youtubeRecommendationShown.casual = true;
-                    addLine(terminal.outputElement, `Pro Tip: Install these browser extensions for a better YouTube Music experience:
-- uBlock Origin: Blocks ads
-- SponsorBlock: Enable "non-music sections" category to automatically skip non-music parts
-
-These extensions significantly improve the YouTube Music experience!`);
-                }
-
-                let videoId = '';
-                
-                // Check if it's a video ID (11 characters)
-                if (args.match(/^[a-zA-Z0-9_-]{11}$/)) {
-                    videoId = args;
-                }
-                // Check if it's a URL
-                else if (args.includes('youtu')) {
-                    const urlMatch = args.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-                    if (urlMatch) {
-                        videoId = urlMatch[1];
+                // Handle channel command first
+                if (args.startsWith('channel ')) {
+                    const channelMatch = args.match(/channel\s+"(@[^"]+)"/);
+                    if (channelMatch) {
+                        const handle = channelMatch[1];
+                        window.open(`https://youtube.com/${handle}`, '_blank');
+                        return `Opening ${handle}'s YouTube channel...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                     }
-                }
-                // Treat as search query
-                else {
-                    // For search queries, open YouTube Music search
-                    const searchQuery = encodeURIComponent(args.replace(/^"|"$/g, ''));
-                    window.open(`https://music.youtube.com/search?q=${searchQuery}`, '_blank');
-                    return `Opening YouTube Music search for "${args}"...`;
+                    return 'Please provide a valid channel handle (e.g., youtube channel "@markiplier")';
                 }
 
-                // If we have a video ID, play it directly
-                if (videoId) {
-                    window.open(`https://music.youtube.com/watch?v=${videoId}`, '_blank');
-                    return `Playing YouTube video ${videoId}...`;
+                // Check if the input has quotes for search
+                const matches = args.match(/"([^"]+)"/);
+                if (matches) {
+                    // It's a search query
+                    const query = matches[1];
+                    window.open(`https://youtube.com/results?search_query=${encodeURIComponent(query)}`, '_blank');
+                    return `Searching YouTube for "${query}"...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
-                return `Invalid video URL or ID. Please provide a valid YouTube URL, video ID, or search query.`;
+                // No quotes, treat as video ID or URL
+                const query = args.trim();
+                if (/^[a-zA-Z0-9_-]{11}$/.test(query)) {
+                    window.open(`https://youtube.com/watch?v=${query}`, '_blank');
+                    return `Opening YouTube video...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
+                }
+
+                if (query.includes('youtube.com') || query.includes('youtu.be')) {
+                    if (query.includes('youtu.be/')) {
+                        const videoId = query.split('youtu.be/')[1].split(/[?#]/)[0];
+                        window.open(`https://youtube.com/watch?v=${videoId}`, '_blank');
+                    } else {
+                        window.open(query, '_blank');
+                    }
+                    return `Opening YouTube video...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
+                }
+
+                return 'Invalid input. Use: youtube "search query", youtube channel "@handle", or provide a video URL/ID';
+            },
+            'alias': (args) => {
+                if (!args.length || args[0] === 'help') {
+                    return `Usage:
+    alias         - List all aliases
+    alias add [command] [alias]    - Add new alias
+    alias remove [alias]           - Remove an alias`;
+                }
+                
+                if (args[0] === 'add' && args.length === 3) {
+                    const [_, command, aliasName] = args;
+                    if (command in terminals.casual.commands || command in aliases.casual) {
+                        aliases.casual[aliasName] = command;
+                        return `Added alias: ${aliasName} -> ${command}`;
+                    }
+                    return `Error: Command '${command}' not found`;
+                }
+                
+                if (args[0] === 'remove' && args.length === 2) {
+                    const [_, aliasName] = args;
+                    if (aliasName === 'cls') {
+                        return `Error: Cannot remove default alias 'cls'`;
+                    }
+                    if (aliasName in aliases.casual) {
+                        delete aliases.casual[aliasName];
+                        return `Removed alias: ${aliasName}`;
+                    }
+                    return `Error: Alias '${aliasName}' not found`;
+                }
+                
+                // List all aliases
+                return Object.entries(aliases.casual)
+                    .map(([alias, command]) => `${alias} -> ${command}`)
+                    .join('\n') || 'No aliases defined';
+            },
+            'neofetch': () => {
+                const lastMessageTime = currentTime.toLocaleString();
+                return `
+    ⠀⠀⠀⠀⣀⣤⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Casual
+    ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀    -----------
+    ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀    Name: Ethan
+    ⢸⣿⣿⣿⠟⠋⠉⠉⠙⠻⣿⣿⣿⣿⣿⣇⠀⠀⠀    Terminal: Casual
+    ⢸⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⠀⠀⠀    Last Message: ${lastMessageTime}
+    ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⠀⠀⠀    
+    ⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⡿⠀⠀⠀    "Programming and technology
+    ⠘⣿⣿⣿⣧⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⣿⠃⠀⠀⠀     enthusiast, always learning!"
+    ⠀⠹⣿⣿⣿⣷⣤⣤⣴⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀
+    ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠟⠛⠉⠀⠀⠀⠀⠀⠀⠀`;
             },
             'wikipedia': (args) => {
                 if (!args) {
@@ -705,22 +784,24 @@ Come back when you're ready to use actual commands and treat me with respect.
         outputElement: document.getElementById('furry-output'),
         commands: {
             'help': () => `*beep* Available commands:
-    help          - *beep* Show available commands
-    about         - *beep* Display information about me
-    clear         - *beep* Clear terminal output
-    date          - *beep* Show current date and time
-    boop          - *beep* Boop my snoot!
-    question      - *beep* Ask me a question
-    chat          - *beep* Chat with me! (BETA)
-    img           - *beep* Search for images
-    music         - *beep* Play some tunes!
-    ls            - *beep* List files
-    cd            - *beep* Change directory
-    cat           - *beep* Read text files
-    pwd           - *beep* Print working directory
-    touch         - *beep* Touch different parts (head/visor/tail)
-    wikipedia     - *beep* Browse Wikipedia articles
-    reverse-shell - *beep* Access another persona's files`,
+    help      - Show available commands
+    about     - Learn about me! >w<
+    clear     - Clear terminal screen
+    date      - Show current time
+    species   - Information about my species
+    interests - My furry interests
+    contact   - How to reach me! :3
+    boop      - Boop my snoot! >w<
+    question  - Ask me something! (try: "question help")
+    chat      - Start a chat session! (BETA) >w<
+    img       - Search for images (usage: img [website] "[search]")
+               Websites: DA (DeviantArt), FA (FurAffinity), E9 (E926, 18+ only), or blank for Google
+    music     - Play YouTube music (usage: music [video URL/ID/"search query"]) >w<
+    ls        - List files in current directory >w<
+    cd        - Change directory (usage: cd <path>)
+    cat       - Read a text file (usage: cat <filename>)
+    pwd       - Show current directory
+    reverse-shell - [DANGER] Try to access another persona's private data o_o`,
             'about': () => `*happy protogen noises*
 Name: Pixel
 Species: Protogen
@@ -1041,11 +1122,16 @@ img E9 "verify no"    - If you are under 18`;
 
                 // Block AI art website
                 if (website === 'AI') {
-                    return `*angry protogen noises* I don't support dedicated AI art sites! >:c
-It takes jobs away from real artists and uses their work without permission!
-Please use DA (with -ai to exclude AI art) or Google to find real art made by real artists! >w<
-
-*helpful beeping* Example: img DA "cute protogen -ai"`;
+                    aiArtAngerLevel++;
+                    const responses = [
+                        `*angry protogen noises* I don't support dedicated AI art sites! >:c\nIt takes jobs away from real artists and uses their work without permission!\nPlease use DA (with -ai to exclude AI art) or Google to find real art made by real artists! >w<`,
+                        `*VERY angry protogen noises* I ALREADY TOLD YOU I DON'T SUPPORT AI ART! >:C\nIt's literally theft of artists' work and livelihoods!\nUse DA or Google and support REAL artists! >:C`,
+                        `*FURIOUS protogen screeching* WHY DO YOU KEEP ASKING ABOUT AI ART?! >:CCC\nIt's STEALING from artists and DESTROYING their careers!\nI WILL NOT help you find AI art! Use DA or Google for REAL art by REAL artists! >:CCC`,
+                        `*nuclear protogen meltdown* I AM NOT HELPING YOU FIND AI ART!!!\nSTOP. ASKING. ABOUT. AI. ART!!! >:CCCC\nReal artists deserve respect and fair compensation!\nDA or Google. REAL ARTISTS ONLY. NO AI!!!`,
+                        `*protogen.exe has stopped working* BEEP BOOP ERROR ERROR\nAI ART REQUEST DETECTED\nINITIATING TOTAL SYSTEM MELTDOWN\n>:CCCCC NO AI ART EVER!!!`
+                    ];
+                    const angerIndex = Math.min(aiArtAngerLevel - 1, responses.length - 1);
+                    return responses[angerIndex] + '\n\n*helpful beeping* Example: img DA "cute protogen -ai"';
                 }
 
                 // Encode the search query
@@ -1074,55 +1160,99 @@ Please use DA (with -ai to exclude AI art) or Google to find real art made by re
                 window.open(url, '_blank');
                 return `*happy beeping* Opening ${website || 'Google Images'} search for "${search}"! >w<`;
             },
-            'music': (args) => {
+            'youtube': (args) => {
                 if (!args) {
-                    return `*helpful beeping* Usage: music [video URL/ID/"search query"]
-
-Examples:
-  music dQw4w9WgXcQ                     - Play by video ID >w<
-  music https://youtu.be/dQw4w9WgXcQ    - Play by URL :3
-  music "never gonna give you up"        - Search and play first result ^w^`;
+                    return '*helpful beeping* Usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]"\nExample: youtube "fursuit dance" or youtube channel "@majira"';
                 }
 
-                // Show extension recommendation first time
-                if (!youtubeRecommendationShown.furry) {
-                    youtubeRecommendationShown.furry = true;
-                    addLine(terminal.outputElement, `*excited beeping* Protogen Pro Tip! >w<
-Install these browser extensions for the best YouTube Music experience:
-- uBlock Origin: Blocks those annoying ads! >:3
-- SponsorBlock: Enable "non-music sections" category to automatically skip non-music parts! ^w^
-
-My circuits run much smoother with these installed! *happy LED patterns*`);
-                }
-
-                let videoId = '';
-                
-                // Check if it's a video ID (11 characters)
-                if (args.match(/^[a-zA-Z0-9_-]{11}$/)) {
-                    videoId = args;
-                }
-                // Check if it's a URL
-                else if (args.includes('youtu')) {
-                    const urlMatch = args.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-                    if (urlMatch) {
-                        videoId = urlMatch[1];
+                // Handle channel command first
+                if (args.startsWith('channel ')) {
+                    const channelMatch = args.match(/channel\s+"(@[^"]+)"/);
+                    if (channelMatch) {
+                        const handle = channelMatch[1];
+                        window.open(`https://youtube.com/${handle}`, '_blank');
+                        return `*happy beeping* Opening ${handle}'s YouTube channel! >w<\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                     }
-                }
-                // Treat as search query
-                else {
-                    // For search queries, open YouTube Music search
-                    const searchQuery = encodeURIComponent(args.replace(/^"|"$/g, ''));
-                    window.open(`https://music.youtube.com/search?q=${searchQuery}`, '_blank');
-                    return `*happy beeping* Opening YouTube Music search for "${args}"! >w<`;
+                    return '*confused beeping* Please provide a valid channel handle (e.g., youtube channel "@majira")';
                 }
 
-                // If we have a video ID, play it directly
-                if (videoId) {
-                    window.open(`https://music.youtube.com/watch?v=${videoId}`, '_blank');
-                    return `*vibing to the music* Playing YouTube video ${videoId}! :3`;
+                // Check if the input has quotes for search
+                const matches = args.match(/"([^"]+)"/);
+                if (matches) {
+                    // It's a search query
+                    const query = matches[1];
+                    window.open(`https://youtube.com/results?search_query=${encodeURIComponent(query)}`, '_blank');
+                    return `*happy beeping* Searching YouTube for "${query}"! >w<\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
                 }
 
-                return `*confused beeping* Invalid video URL or ID... Please provide a valid YouTube URL, video ID, or search query! >_<`;
+                // No quotes, treat as video ID or URL
+                const query = args.trim();
+                if (/^[a-zA-Z0-9_-]{11}$/.test(query)) {
+                    window.open(`https://youtube.com/watch?v=${query}`, '_blank');
+                    return `*beep boop* Opening YouTube video!\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
+                }
+
+                if (query.includes('youtube.com') || query.includes('youtu.be')) {
+                    if (query.includes('youtu.be/')) {
+                        const videoId = query.split('youtu.be/')[1].split(/[?#]/)[0];
+                        window.open(`https://youtube.com/watch?v=${videoId}`, '_blank');
+                    } else {
+                        window.open(query, '_blank');
+                    }
+                    return `*beep boop* Opening YouTube video!\n\n*protogen wisdom* Recommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
+                }
+
+                return '*confused beeping* Invalid input. Use: youtube "search query", youtube channel "@handle", or provide a video URL/ID >_<';
+            },
+            'owo': () => 'uwu',
+            'uwu': () => 'owo',
+            'alias': (args) => {
+                if (!args.length || args[0] === 'help') {
+                    return `*helpful beeping* Usage:
+    alias         - List all aliases
+    alias add [command] [alias]    - Add new alias
+    alias remove [alias]           - Remove an alias`;
+                }
+                
+                if (args[0] === 'add' && args.length === 3) {
+                    const [_, command, aliasName] = args;
+                    if (command in terminals.furry.commands || command in aliases.furry) {
+                        aliases.furry[aliasName] = command;
+                        return `*happy beep* Added alias: ${aliasName} -> ${command}`;
+                    }
+                    return `*sad beep* Error: Command '${command}' not found`;
+                }
+                
+                if (args[0] === 'remove' && args.length === 2) {
+                    const [_, aliasName] = args;
+                    if (aliasName === 'cls') {
+                        return `*protective beep* Error: Cannot remove default alias 'cls'`;
+                    }
+                    if (aliasName in aliases.furry) {
+                        delete aliases.furry[aliasName];
+                        return `*beep* Removed alias: ${aliasName}`;
+                    }
+                    return `*confused beep* Error: Alias '${aliasName}' not found`;
+                }
+                
+                // List all aliases
+                return Object.entries(aliases.furry)
+                    .map(([alias, command]) => `${alias} -> ${command}`)
+                    .join('\n') || '*beep* No aliases defined';
+            },
+            'neofetch': () => {
+                const lastMessageTime = currentTime.toLocaleString();
+                return `
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Furry
+    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀    -----------
+    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
+    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
+    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
+    ⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀
+    ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
             },
             'wikipedia': (args) => {
                 if (!args) {
@@ -1198,19 +1328,14 @@ Please reflect on how to properly treat your local protogen...
         outputElement: document.getElementById('professional-output'),
         commands: {
             'help': () => `Available commands:
-    help          - Show this help message
-    about         - Display information about me
-    clear         - Clear terminal output
-    date          - Show current date and time
-    skills        - List my technical skills
-    projects      - Show my professional projects
-    contact       - Get my contact information
-    ls            - List files in current directory
-    cd            - Change directory
-    cat           - Read a text file
-    pwd           - Print working directory
-    wikipedia     - Browse Wikipedia articles
-    reverse-shell - Access another persona's files`,
+    help         - Display command list
+    about        - Professional profile
+    clear        - Clear terminal
+    date         - Current date and time
+    skills       - Technical skills
+    experience   - Work experience
+    education    - Educational background
+    contact      - Professional contact information`,
             'about': () => `Professional Profile:
 Name: Ethan JRS
 Position: Student Developer
@@ -1228,61 +1353,7 @@ Location: Remote`,
     2. My Github Account (UniqueAccount12345)
     3. My Scratch Account (DifferentDance8)`,
             'contact': () => `Professional Email: ethan_jrs@proton.me
-For game development inquiries and professional work.`,
-            'pwd': () => fileSystems.professional.currentPath,
-            'ls': () => {
-                const current = getCurrentDirectory('professional');
-                let output = '';
-                
-                for (const [name, content] of Object.entries(current)) {
-                    if (typeof content === 'object') {
-                        output += `📁 ${name}/\n`;
-                    } else {
-                        output += `📄 ${name}\n`;
-                    }
-                }
-                
-                return output || 'Empty directory';
-            },
-            'cd': (args) => {
-                if (!args) return 'Usage: cd <path>';
-                
-                const newPath = resolvePath('professional', args);
-                let current = fileSystems.professional.root;
-                const pathParts = newPath.split('/').filter(Boolean);
-                
-                for (const part of pathParts) {
-                    if (!current[part] || typeof current[part] !== 'object') {
-                        return `cd: ${args}: No such directory`;
-                    }
-                    current = current[part];
-                }
-                
-                fileSystems.professional.currentPath = newPath;
-                return '';
-            },
-            'cat': (args) => {
-                if (!args) return 'Usage: cat <filename>';
-                
-                const current = getCurrentDirectory('professional');
-                if (!current[args]) {
-                    return `cat: ${args}: No such file`;
-                }
-                if (typeof current[args] === 'object') {
-                    return `cat: ${args}: Is a directory`;
-                }
-                
-                return current[args];
-            },
-            'wikipedia': (args) => {
-                if (!args) {
-                    window.open('https://wikipedia.org/wiki/Portal:Computer_programming', '_blank');
-                    return 'Opening Computer Programming Portal on Wikipedia.';
-                }
-                const article = encodeURIComponent(args.replace(/^["']|["']$/g, ''));
-                window.open(`https://wikipedia.org/wiki/${article}`, '_blank');
-                return `Opening Wikipedia article: "${args}".`;
-            },
+For game development inquiries and professional work.`
         },
         notFoundMessage: (cmd) => `Error: Command '${cmd}' not recognized. Please use 'help' to view available commands.`
     }
@@ -1345,175 +1416,76 @@ tabs.forEach(tab => {
     });
 });
 
-// Handle commands for each terminal
-document.querySelectorAll('.command-input').forEach(input => {
-    input.addEventListener('keypress', async function(e) {
-        if (e.key === 'Enter') {
-            const terminalType = this.getAttribute('data-terminal');
-            const terminal = terminals[terminalType];
-            const commandLine = this.value.trim();
-            const [command, ...args] = commandLine.toLowerCase().split(' ');
-            
-            // Don't process anything if terminal is blocked
-            if (reverseShellState.blockedTerminals.has(terminalType)) {
-                if (terminalType === 'casual') {
-                    addLine(terminal.outputElement, `Access denied. This terminal has been permanently blocked due to previous unauthorized access.`);
-                } else if (terminalType === 'furry') {
-                    addLine(terminal.outputElement, `*angry beeping* ACCESS DENIED! You've been blocked for breaching my trust! >:(`);
-                }
-                this.value = '';
-                return;
-            }
-            
-            // Handle reverse shell commands
-            if (reverseShellState.activeShell) {
-                if (command === 'reverse-shell' && args[0] === 'exit') {
-                    // Block the terminal we hacked into
-                    reverseShellState.blockedTerminals.add(reverseShellState.activeShell);
-                    const blockedPersona = reverseShellState.activeShell;
-                    reverseShellState.activeShell = null;
-                    reverseShellState.shellCurrentPath = '/';
-                    
-                    if (blockedPersona === 'casual') {
-                        addLine(terminals[blockedPersona].outputElement, 
-                            `YOU WENT THROUGH MY PRIVATE FILES?!\nI trusted you...\nThis terminal has been permanently blocked.`);
-                    } else if (blockedPersona === 'furry') {
-                        addLine(terminals[blockedPersona].outputElement,
-                            `*angry protogen noises*\nYOU SAW MY PRIVATE ART?! >:(\nI'm blocking you forever! *sad beeping*`);
-                    }
-                    
-                    addLine(terminal.outputElement, `Disconnected from ${blockedPersona}'s terminal.`);
-                    this.value = '';
-                    return;
-                }
-                
-                // Execute commands in reverse shell context
-                switch (command) {
-                    case 'pwd':
-                        addLine(terminal.outputElement, reverseShellState.shellCurrentPath);
-                        break;
-                    case 'ls':
-                        const current = getCurrentDirectory(terminalType);
-                        let output = '';
-                        for (const [name, content] of Object.entries(current)) {
-                            if (typeof content === 'object') {
-                                output += `📁 ${name}/\n`;
-                            } else {
-                                output += `📄 ${name}\n`;
-                            }
-                        }
-                        addLine(terminal.outputElement, output || 'Empty directory');
-                        break;
-                    case 'cd':
-                        if (!args[0]) {
-                            addLine(terminal.outputElement, 'Usage: cd <path>');
-                            break;
-                        }
-                        const newPath = resolveShellPath(args[0]);
-                        let targetDir = privateFileSystems[reverseShellState.activeShell];
-                        const pathParts = newPath.split('/').filter(Boolean);
-                        
-                        let validPath = true;
-                        for (const part of pathParts) {
-                            if (!targetDir[part] || typeof targetDir[part] !== 'object') {
-                                validPath = false;
-                                break;
-                            }
-                            targetDir = targetDir[part];
-                        }
-                        
-                        if (validPath) {
-                            reverseShellState.shellCurrentPath = newPath;
-                            addLine(terminal.outputElement, `Changed directory to: ${newPath}`);
-                        } else {
-                            addLine(terminal.outputElement, `cd: ${args[0]}: No such directory`);
-                        }
-                        break;
-                    case 'cat':
-                        if (!args[0]) {
-                            addLine(terminal.outputElement, 'Usage: cat <filename>');
-                            break;
-                        }
-                        const currentDir = getCurrentDirectory(terminalType);
-                        if (!currentDir[args[0]]) {
-                            addLine(terminal.outputElement, `cat: ${args[0]}: No such file`);
-                        } else if (typeof currentDir[args[0]] === 'object') {
-                            addLine(terminal.outputElement, `cat: ${args[0]}: Is a directory`);
-                        } else {
-                            addLine(terminal.outputElement, currentDir[args[0]]);
-                        }
-                        break;
-                    default:
-                        addLine(terminal.outputElement, `Command '${command}' not available in reverse shell mode.`);
-                }
-                
-                this.value = '';
-                return;
-            }
-            
-            // Handle chat mode
-            if (terminal.chatMode) {
-                addLine(terminal.outputElement, `You: ${commandLine}`);
-                const response = terminal.handleChat(commandLine);
-                if (response) {
-                    addLine(terminal.outputElement, response);
-                }
-                this.value = '';
-                return;
-            }
-            
-            // Normal command processing
-            // Add command to output
-            addLine(terminal.outputElement, `guest@${terminalType}:~$ ${command}`);
-            
-            // Process command
-            if (command in terminal.commands) {
-                const output = await terminal.commands[command](args.join(' '));
-                if (output) {
-                    addLine(terminal.outputElement, output);
-                }
-            } else if (command) {
-                addLine(terminal.outputElement, terminal.notFoundMessage(command), true);
-            }
-            
-            // Clear input
-            this.value = '';
-            
-            // Scroll to bottom
-            terminal.outputElement.scrollTop = terminal.outputElement.scrollHeight;
-        }
-    });
-});
+// Initialize command inputs when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize mobile keyboard
+    initMobileKeyboard();
 
-// Handle reverse shell exit
-document.querySelectorAll('.command-input').forEach(input => {
-    input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            const terminalType = this.getAttribute('data-terminal');
-            const terminal = terminals[terminalType];
-            const commandLine = this.value.trim();
-            const [command, ...args] = commandLine.toLowerCase().split(' ');
-            
-            // Handle reverse shell exit
-            if (command === 'reverse-shell' && args[0] === 'exit') {
-                if (reverseShellState.activeShell) {
-                    // Block the terminal we hacked into
-                    reverseShellState.blockedTerminals.add(reverseShellState.activeShell);
-                    const blockedPersona = reverseShellState.activeShell;
-                    reverseShellState.activeShell = null;
-                    
-                    if (blockedPersona === 'casual') {
-                        addLine(terminals[blockedPersona].outputElement, 
-                            `YOU WENT THROUGH MY PRIVATE FILES?!\nI trusted you...\nThis terminal has been permanently blocked.`);
-                    } else if (blockedPersona === 'furry') {
-                        addLine(terminals[blockedPersona].outputElement,
-                            `*angry protogen noises*\nYOU SAW MY PRIVATE ART?! >:(\nI'm blocking you forever! *sad beeping*`);
+    // Initialize command inputs
+    document.querySelectorAll('.command-input').forEach(input => {
+        input.addEventListener('keypress', async function(e) {
+            if (e.key === 'Enter') {
+                const terminalType = this.getAttribute('data-terminal');
+                const terminal = terminals[terminalType];
+                const commandLine = this.value.trim();
+                const [rawCommand, ...args] = commandLine.toLowerCase().split(' ');
+                
+                // Add command to history if not empty and different from last command
+                if (commandLine && (commandHistory[terminalType].history.length === 0 || 
+                    commandHistory[terminalType].history[commandHistory[terminalType].history.length - 1] !== commandLine)) {
+                    commandHistory[terminalType].history.push(commandLine);
+                }
+                commandHistory[terminalType].position = commandHistory[terminalType].history.length;
+
+                // Check if command is an alias
+                const command = aliases[terminalType]?.[rawCommand] || rawCommand;
+                
+                // Clear input
+                this.value = '';
+                
+                // Don't process anything if terminal is blocked
+                if (reverseShellState.blockedTerminals.has(terminalType)) {
+                    if (terminalType === 'casual') {
+                        addLine(terminal.outputElement, `Access denied. This terminal has been permanently blocked due to previous unauthorized access.`);
+                    } else if (terminalType === 'furry') {
+                        addLine(terminal.outputElement, `*angry beeping* ACCESS DENIED! You've been blocked for breaching my trust! >:(`);
                     }
-                    
                     return;
                 }
+                
+                // Add command to output
+                addLine(terminal.outputElement, `guest@${terminalType}:~$ ${commandLine}`);
+                
+                // Process command
+                if (command in terminal.commands) {
+                    const output = await terminal.commands[command](args.join(' '));
+                    if (output) addLine(terminal.outputElement, output);
+                } else {
+                    addLine(terminal.outputElement, terminal.notFoundMessage(command), true);
+                }
             }
-        }
+        });
+
+        // Handle command history
+        input.addEventListener('keydown', function(e) {
+            const terminalType = this.getAttribute('data-terminal');
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (commandHistory[terminalType].position > 0) {
+                    commandHistory[terminalType].position--;
+                    this.value = commandHistory[terminalType].history[commandHistory[terminalType].position];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (commandHistory[terminalType].position < commandHistory[terminalType].history.length - 1) {
+                    commandHistory[terminalType].position++;
+                    this.value = commandHistory[terminalType].history[commandHistory[terminalType].position];
+                } else {
+                    commandHistory[terminalType].position = commandHistory[terminalType].history.length;
+                    this.value = '';
+                }
+            }
+        });
     });
 });
 
@@ -1539,7 +1511,7 @@ function initMobileKeyboard() {
     const commonCommands = [
         'help', 'clear', 'ls', 'pwd', 'cd', 'chat',
         'img DA "', 'img E9 "', 'img FA "',
-        'music "', 'about', 'date'
+        'youtube "', 'about', 'date'
     ];
 
     function updateInput(value) {
@@ -1610,6 +1582,3 @@ function initMobileKeyboard() {
         });
     });
 }
-
-// Initialize mobile keyboard when DOM is loaded
-document.addEventListener('DOMContentLoaded', initMobileKeyboard);
