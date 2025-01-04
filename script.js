@@ -98,8 +98,15 @@ const rizzState = {
                 "You must be a demon level because you're absolutely stunning!",
                 "Is your name Practice Mode? Because I'd fail again and again for you!"
             ],
+            'music': [
+                "Are you a custom level song? Because you've got my heart beating to your rhythm!",
+                "You must be NewGrounds because you're music to my ears!",
+                "Is your BPM high? Because you're making my heart race!"
+            ],
             'you-know-what': [
-                "Sorry, but I already have someone else for THAT kind of stuff! 😳"
+                "Hey, want to compile some private code together?",
+                "I've got some functions that need unit testing...",
+                "Want to debug my private repository?"
             ]
         }
     },
@@ -127,10 +134,15 @@ const rizzState = {
                 "You must be a custom build because you're absolutely unique! *tail wags*",
                 "Is your visor crystal? Because I can see myself in your future! uwu"
             ],
+            'synth': [
+                "Are you a synthesizer? Because you're making my circuits sing! >w<",
+                "You must be a wave function because you've got my frequencies harmonizing! *happy chirps*",
+                "Is your voice modulator digital? Because it's music to my audio processors! :3"
+            ],
             'you-know-what': [
-                "*visor turns deep pink* O-oh my... I've been waiting for you to ask that~ >///<",
-                "*cooling fans max out* Y-yes... I'd love to interface with you~ *tail wags excitedly*",
-                "*steam escapes vents* I've been hoping you'd suggest that... >////<"
+                "Are your ports open for a private connection? >w<",
+                "Want to explore my private firmware together?~ :3",
+                "Shall we interface in a more... intimate protocol? >///<"
             ]
         }
     }
@@ -726,99 +738,6 @@ img SB "verify no"    - If you are under 18`;
             },
             'youtube': (args) => {
                 if (!args) {
-                    return 'Usage: youtube [video URL/ID/"search query"] OR youtube channel "@[handle]"\nExample: youtube "cute cats" or youtube channel "@markiplier"';
-                }
-
-                // Handle channel command first
-                if (args.startsWith('channel ')) {
-                    const channelMatch = args.match(/channel\s+"(@[^"]+)"/);
-                    if (channelMatch) {
-                        const handle = channelMatch[1];
-                        window.open(`https://youtube.com/${handle}`, '_blank');
-                        return `Opening ${handle}'s YouTube channel...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
-                    }
-                    return 'Please provide a valid channel handle (e.g., youtube channel "@markiplier")';
-                }
-
-                // Check if the input has quotes for search
-                const matches = args.match(/"([^"]+)"/);
-                if (matches) {
-                    // It's a search query
-                    const query = matches[1];
-                    window.open(`https://youtube.com/results?search_query=${encodeURIComponent(query)}`, '_blank');
-                    return `Searching YouTube for "${query}"...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
-                }
-
-                // No quotes, treat as video ID or URL
-                const query = args.trim();
-                if (/^[a-zA-Z0-9_-]{11}$/.test(query)) {
-                    window.open(`https://youtube.com/watch?v=${query}`, '_blank');
-                    return `Opening YouTube video...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
-                }
-
-                if (query.includes('youtube.com') || query.includes('youtu.be')) {
-                    if (query.includes('youtu.be/')) {
-                        const videoId = query.split('youtu.be/')[1].split(/[?#]/)[0];
-                        window.open(`https://youtube.com/watch?v=${videoId}`, '_blank');
-                    } else {
-                        window.open(query, '_blank');
-                    }
-                    return `Opening YouTube video...\n\nRecommended extensions for YouTube:\n- uBlock Origin: Blocks ads and trackers\n- SponsorBlock: Skips non-content segments like sponsorships, intros, and outros`;
-                }
-
-                return 'Invalid input. Use: youtube "search query", youtube channel "@handle", or provide a video URL/ID';
-            },
-            'alias': (args) => {
-                if (!args.length || args[0] === 'help') {
-                    return `Usage:
-    alias         - List all aliases
-    alias add [command] [alias]    - Add new alias
-    alias remove [alias]           - Remove an alias`;
-                }
-                
-                if (args[0] === 'add' && args.length === 3) {
-                    const [_, command, aliasName] = args;
-                    if (command in terminals.casual.commands || command in aliases.casual) {
-                        aliases.casual[aliasName] = command;
-                        return `Added alias: ${aliasName} -> ${command}`;
-                    }
-                    return `Error: Command '${command}' not found`;
-                }
-                
-                if (args[0] === 'remove' && args.length === 2) {
-                    const [_, aliasName] = args;
-                    if (aliasName === 'cls') {
-                        return `Error: Cannot remove default alias 'cls'`;
-                    }
-                    if (aliasName in aliases.casual) {
-                        delete aliases.casual[aliasName];
-                        return `Removed alias: ${aliasName}`;
-                    }
-                    return `Error: Alias '${aliasName}' not found`;
-                }
-                
-                // List all aliases
-                return Object.entries(aliases.casual)
-                    .map(([alias, command]) => `${alias} -> ${command}`)
-                    .join('\n') || 'No aliases defined';
-            },
-            'neofetch': () => {
-                const lastMessageTime = currentTime.toLocaleString();
-                return `
-    ⠀⠀⠀⠀⣀⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Casual
-    ⠀⢀⣴⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀    -----------
-    ⢠⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀    Name: Ethan
-    ⠀⢸⣿⣿⣿⠟⠋⠉⠙⠻⣿⣿⣿⣇⠀⠀⠀    Terminal: Casual
-    ⢸⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⠀⠀⠀    Last Message: ${lastMessageTime}
-    ⣸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⠀⠀⠀    
-    ⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⡿⠀⠀⠀    "Programming and technology
-    ⠘⣿⣿⣿⣧⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⠃⠀⠀⠀     enthusiast, always learning!"
-    ⠀⠹⣿⣿⣿⣷⣤⣤⣴⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀
-    ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀
-    ⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠟⠛⠉⠀⠀⠀⠀⠀⠀⠀`;
-            },
-            'wikipedia': (args) => {
-                if (!args) {
                     window.open('https://wikipedia.org/wiki/Main_Page', '_blank');
                     return 'Opening Wikipedia Main Page in a new tab!';
                 }
@@ -893,6 +812,7 @@ Available topics (use "rizz help" for details):
 - personality
 - intelligence
 - gaming
+- music
 
 Current rizz level: ${rizzState.casual.value}/25`;
                 }
@@ -906,6 +826,7 @@ coding - Try a programming pickup line
 personality - Charm me with my traits
 intelligence - Impress me with smart lines
 gaming - Show off your Geometry Dash knowledge
+music - Serenade me with rhythm game lines
 
 Current rizz level: ${rizzState.casual.value}/25`;
                 }
@@ -915,8 +836,9 @@ Current rizz level: ${rizzState.casual.value}/25`;
                     if (rizzState.casual.value < 25) {
                         return `I don't know what you're talking about! 😅`;
                     }
-                    return `USER> Hey... want to do you-know-what? 😏
-Ethan> ${rizzState.casual.topics[topic][0]}`;
+                    const response = rizzState.casual.topics[topic][Math.floor(Math.random() * rizzState.casual.topics[topic].length)];
+                    return `USER> ${response}
+Ethan> Sorry, but I already have someone else for THAT kind of stuff! 😳`;
                 }
 
                 if (!rizzState.casual.topics[topic]) {
@@ -1289,8 +1211,8 @@ I appreciate artists properly tagging their work! *happy LED patterns*
                     youtubeRecommendationShown.furry = true;
                     addLine(terminal.outputElement, `*excited beeping* Protogen Pro Tip! >w<
 Install these browser extensions for the best YouTube Music experience:
-- uBlock Origin: Blocks those annoying ads! >:3
-- SponsorBlock: Enable "non-music sections" category to automatically skip non-music parts! ^w^
+- uBlock Origin: Blocks ads and trackers
+- SponsorBlock: Enable "non-music sections" category to automatically skip non-music parts
 
 My circuits run much smoother with these installed! *happy LED patterns*`);
                 }
@@ -1486,16 +1408,16 @@ Loading Protogen Pong... Have fun! :3`;
                 
                 const lastMessageTime = currentTime.toLocaleString();
                 return `
-    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Furry
-    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀    -----------
-    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
-    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
-    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
-    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
-    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
-    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀    Guest@Furry
+    ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣷⡀⠀⠀⠀    -----------
+    ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
+    ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
+    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
     ⠘⢿⣿⣿⣿⡿⠋⠀⠀
-    ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
+    ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
             },
             'wikipedia': (args) => {
                 if (!args) {
@@ -1582,6 +1504,7 @@ Available topics (use "rizz help" for details):
 - hardware
 - firmware
 - protogen
+- synth
 
 *displays status* Current rizz level: ${rizzState.furry.value}/25`;
                 }
@@ -1595,6 +1518,7 @@ circuits - Try an electrical pickup line
 hardware - Charm me with component lines
 firmware - Impress me with software talk
 protogen - Show off your species knowledge
+synth - Harmonize with my audio systems
 
 *LED status* Current rizz level: ${rizzState.furry.value}/25`;
                 }
@@ -1605,8 +1529,10 @@ protogen - Show off your species knowledge
                         return `*confused beeping* W-what are you talking about? >_<`;
                     }
                     const response = rizzState.furry.topics[topic][Math.floor(Math.random() * rizzState.furry.topics[topic].length)];
-                    return `USER> H-hey Pixel... want to do you-know-what? >////<
-Pixel> ${response}`;
+                    return `USER> ${response}
+Pixel> *visor turns deep pink* O-oh my... I've been waiting for you to ask that~ >////<
+       *cooling fans max out* Y-yes... I'd love to interface with you~ *tail wags excitedly*
+       *steam escapes vents* I've been hoping you'd suggest that... >////<`;
                 }
 
                 if (!rizzState.furry.topics[topic]) {
