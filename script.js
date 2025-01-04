@@ -255,6 +255,7 @@ const terminals = {
     cd       - Change directory (usage: cd <path>)
     cat      - Read a text file (usage: cat <filename>)
     pwd      - Print working directory
+    touch    - Touch different parts (usage: touch <head/tail>)
     reverse-shell - [DANGEROUS] Attempt to access another persona's private files`,
             'about': () => `Name: Ethan Johnathan (not my real last name but)
 Age: 15
@@ -344,6 +345,18 @@ Maybe try getting to know someone as a friend first? 😅`;
                 }
                 
                 return current[args];
+            },
+            'touch': (args) => {
+                if (!args) return `Please specify where to touch! (head/tail)`;
+                const location = args.toLowerCase();
+                switch (location) {
+                    case 'head':
+                        return `*tries to move away* H-hey, don't touch me there!`;
+                    case 'tail':
+                        return `I don't have a tail...`;
+                    default:
+                        return `I don't want to be touched there!`;
+                }
             },
             'reverse-shell': (args) => {
                 if (reverseShellState.blockedTerminals.has('casual')) {
@@ -699,6 +712,7 @@ Come back when you're ready to use actual commands and treat me with respect.
     cd        - Change directory (usage: cd <path>)
     cat       - Read a text file (usage: cat <filename>)
     pwd       - Show current directory
+    touch     - Touch different parts (head/visor/tail)
     reverse-shell - [DANGER] Try to access another persona's private data o_o`,
             'about': () => `*happy protogen noises*
 Name: Pixel
@@ -799,6 +813,20 @@ Try "question help" to see what you can ask! owo`;
                 
                 return `*reading file* >w<\n${current[args]}`;
             },
+            'touch': (args) => {
+                if (!args) return `*confused beeping* Touch where? (head/visor/tail)`;
+                const location = args.toLowerCase();
+                switch (location) {
+                    case 'head':
+                        return `*happy LED patterns* *leans into your hand* Mmm, I appreciate the pats! >w<`;
+                    case 'visor':
+                        return terminals.furry.commands['boop']();
+                    case 'tail':
+                        return `*blushes intensely* O-oh my... *tail wags* W-we should take this somewhere more private~ >////<`;
+                    default:
+                        return `*confused beeping* I'm not sure about being touched there...`;
+                }
+            },
             'reverse-shell': (args) => {
                 if (reverseShellState.blockedTerminals.has('furry')) {
                     return `*angry beeping* ACCESS DENIED! You've been blocked for breaching my trust! >:(`;
@@ -812,7 +840,7 @@ Try "question help" to see what you can ask! owo`;
                 }
                 
                 if (!privateFileSystems[target]) {
-                    return `*error beep* Invalid target: ${target}`;
+                    return `*error beep* Invalid target persona: ${target}`;
                 }
                 
                 // Special message for website persona
