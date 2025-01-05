@@ -1,11 +1,12 @@
 // ========= Ethan Johnathan's Disclaimer ===========
 // Hey there! Quick heads-up about this code:  
-// It's absolutely *MASSIVE*! 😅  
+// It's absolutely *MASSIVE*! 
 // Save yourself the trouble and just CTRL+F your way to the function you need. Trust me, your sanity will thank you!  
 // ========= Pixel's Disclaimer ===========
-// ✨ Heyo! *visor glows green* ✨  
-// This code is HUUUGE!! 🦾  
-// Use CTRL+F to zap to the function you need! *visor flickers to 'o_o'* Your brain circuits will totally thank you! 🐾  
+//  Heyo! *visor glows green* 
+// This code is HUUUGE!! 
+// Use CTRL+F to zap to the function you need! *visor flickers to 'o_o'* Your brain circuits will totally thank you! 
+
 // =========== Ethan JRS' Dislaimer ===========
 // This codebase is extensive and contains numerous functions.  
 // It is strongly recommended to utilize CTRL+F to locate the desired function efficiently.  
@@ -238,19 +239,20 @@ If you're reading this, you've somehow managed to hack into the ACTUAL website's
 Yes, that's right - the very website you're using right now.
 This isn't just another simulated file system like the others...
 
-This is getting a bit too meta, isn't it? 🤔
+This is getting a bit too meta, isn't it? 
 
 WARNING: Be careful what you do here. These are the REAL files powering this website.
 Any damage you do here will ACTUALLY break things!
 
-P.S. If you're seeing this... well done on finding this easter egg! 🥚`,
+P.S. If you're seeing this... well done on finding this easter egg! 
+`,
         'index.html': 'The ACTUAL index.html file you\'re looking at right now!',
-        'script.js': 'The ACTUAL script.js that powers this terminal... which means this file contains its own code... 🤯',
+        'script.js': 'The ACTUAL script.js that powers this terminal... which means this file contains its own code... ',
         'style.css': 'The ACTUAL CSS that styles this terminal.',
         'casualchat.json': 'The ACTUAL chat responses for the casual persona.',
         'furrychat.json': 'The ACTUAL chat responses for the furry persona.',
         '.git': {
-            'config': 'Your standard Git config... wait, are we in a Git repo? 👀',
+            'config': 'Your standard Git config... wait, are we in a Git repo? ',
             'HEAD': 'ref: refs/heads/main',
             'logs': {
                 'commit_history.txt': 'A trail of commits showing how this website was built...'
@@ -436,7 +438,7 @@ Hobbies: Reading, Gaming, and Coding`,
 Been playing since I was 10, and I still find new challenges to beat!`;
                     case 'do you wanna date me':
                         return `Sorry, but I'm already taken! Besides, I don't really know you...
-Maybe try getting to know someone as a friend first? 😅`;
+Maybe try getting to know someone as a friend first? `;
                     default:
                         return `I don't understand that question. Try "question help" for available topics!`;
                 }
@@ -448,9 +450,9 @@ Maybe try getting to know someone as a friend first? 😅`;
                 
                 for (const [name, content] of Object.entries(current)) {
                     if (typeof content === 'object') {
-                        output += `📁 ${name}/\n`;
+                        output += ` ${name}/\n`;
                     } else {
-                        output += `📄 ${name}\n`;
+                        output += ` ${name}\n`;
                     }
                 }
                 
@@ -522,12 +524,12 @@ WARNING: You've somehow managed to access the ACTUAL website's file system.
 Yes, that's right - the very website you're using right now.
 This isn't just another simulated file system like the others...
 
-This is getting a bit too meta, isn't it? 🤔
+This is getting a bit too meta, isn't it? 
 
 WARNING: Be careful what you do here. These are the REAL files powering this website.
 Any damage you do here will ACTUALLY break things!
 
-P.S. If you're seeing this... well done on finding this easter egg! 🥚`;
+P.S. If you're seeing this... well done on finding this easter egg! `;
                 }
                 
                 reverseShellState.activeShell = target;
@@ -810,7 +812,7 @@ Me: ${rpsState.casual.computerScore}`;
 - personality
 - intelligence
 - gaming
-- music${rizzState.casual.value >= 25 ? '\n- you-know-what 😏' : ''}`;
+- music${rizzState.casual.value >= 25 ? '\n- you-know-what ' : ''}`;
 
                     return `Usage: rizz <topic>
 Available topics (use "rizz help" for details):
@@ -824,7 +826,7 @@ Current rizz level: ${rizzState.casual.value}/25`;
 personality - Charm me with my traits
 intelligence - Impress me with smart lines
 gaming - Show off your Geometry Dash knowledge
-music - Serenade me with rhythm game lines${rizzState.casual.value >= 25 ? '\nyou-know-what - Try something more... intimate 😏' : ''}`;
+music - Serenade me with rhythm game lines${rizzState.casual.value >= 25 ? '\nyou-know-what - Try something more... intimate ' : ''}`;
 
                     return `Here's how to rizz me up:
 Choose a topic and I'll respond to your pickup line!
@@ -838,11 +840,11 @@ Current rizz level: ${rizzState.casual.value}/25`;
                 const topic = args.toLowerCase();
                 if (topic === 'you-know-what') {
                     if (rizzState.casual.value < 25) {
-                        return `I don't know what you're talking about! 😅`;
+                        return `I don't know what you're talking about! `;
                     }
                     const response = rizzState.casual.topics[topic][Math.floor(Math.random() * rizzState.casual.topics[topic].length)];
                     return `USER> ${response}
-Ethan> Sorry, but I already have someone else for THAT kind of stuff! 😳`;
+Ethan> Sorry, but I already have someone else for THAT kind of stuff! `;
                 }
 
                 if (!rizzState.casual.topics[topic]) {
@@ -850,7 +852,7 @@ Ethan> Sorry, but I already have someone else for THAT kind of stuff! 😳`;
                 }
 
                 if (rizzState.casual.usedTopics.has(topic)) {
-                    return `You've already used a pickup line for ${topic}! Try another topic! 😊`;
+                    return `You've already used a pickup line for ${topic}! Try another topic! `;
                 }
 
                 const responses = rizzState.casual.topics[topic];
@@ -859,8 +861,8 @@ Ethan> Sorry, but I already have someone else for THAT kind of stuff! 😳`;
                 rizzState.casual.value = Math.min(25, rizzState.casual.value + 5);
 
                 return `USER> ${response}
-Ethan> Omg that was smooth! 😳
-       My rizz meter is now at ${rizzState.casual.value}/25! ${rizzState.casual.value === 25 ? '\n       (Psst... try "rizz you-know-what" 😏)' : ''}`;
+Ethan> Omg that was smooth! 
+       My rizz meter is now at ${rizzState.casual.value}/25! ${rizzState.casual.value === 25 ? '\n       (Psst... try "rizz you-know-what" )' : ''}`;
             },
         },
         chatMode: false,
@@ -911,11 +913,11 @@ Come back when you're ready to use actual commands and treat me with respect.
                 case 5:
                     return `STOP TYPING "${cmd}"! IT'S NOT A COMMAND AND NEVER WILL BE!`;
                 case 6:
-                    return `😠 ${cmd.toUpperCase()} IS NOT A COMMAND! WHAT DON'T YOU UNDERSTAND?!`;
+                    return ``;
                 case 7:
-                    return `😡 LAST WARNING! STOP TYPING "${cmd}" OR YOU'LL BE PUT IN TIMEOUT!`;
+                    return `LAST WARNING! STOP TYPING "${cmd}" OR YOU'LL BE PUT IN TIMEOUT!`;
                 default:
-                    return `😠 ${cmd.toUpperCase()} IS NOT A COMMAND! WHAT DON'T YOU UNDERSTAND?!`;
+                    return ``;
             }
         }
     },
@@ -1000,9 +1002,9 @@ Try "question help" to see what you can ask! owo`;
                 
                 for (const [name, content] of Object.entries(current)) {
                     if (typeof content === 'object') {
-                        output += `📁 ${name}/ (sub-directory!)\n`;
+                        output += ` ${name}/ (sub-directory!)\n`;
                     } else {
-                        output += `📄 ${name} (text file!)\n`;
+                        output += ` ${name} (text file!)\n`;
                     }
                 }
                 
@@ -1416,12 +1418,12 @@ Loading Protogen Pong... Have fun! :3`;
     ⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣷⡀⠀⠀⠀    -----------
     ⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣷⡀⠀    Name: Pixel
     ⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀    Terminal: Furry
-    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
-    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇    
-    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
-    ⢹⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
+    ⢀⣿⣿⣿⣿⣿⣿⣿⣿⡀    Last Message: ${lastMessageTime}
+    ⣸⣿⣿⣿⣿⣿⣿⣿⣿⡇    
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿    *happy protogen noises*
+    ⢹⣿⣿⣿⣿⣿⣿⣿⡟⠀    beep boop! >w<
     ⠘⢿⣿⣿⣿⡿⠋⠀⠀
-    ⠀⠀⠙⢿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
+    ⠀⠀⠙⢿⣿⣿⣿⣿⡿⠟⠋⠀⠀`;
             },
             'wikipedia': (args) => {
                 if (!args) {
@@ -1561,6 +1563,21 @@ Pixel> *visor turns deep pink* O-oh my... I've been waiting for you to ask that~
 Pixel> *cooling fans spin up* O-oh my... that was smooth! >////<
        *system temperature rising*
        My rizz meter just increased to ${rizzState.furry.value}/25! ${rizzState.furry.value === 25 ? '\n       *whispers* (T-try "rizz you-know-what" if you\'re interested... >////<)' : ''}`;
+            },
+            'install-virus': () => {
+                const terminal = document.getElementById('furry-terminal');
+                terminal.style.animation = 'glitch 0.3s infinite';
+                document.head.insertAdjacentHTML('beforeend', 
+                    '<style>@keyframes glitch{0%{transform:translate(0)}50%{transform:translate(-2px,2px)}100%{transform:translate(2px,-2px)}}</style>'
+                );
+                const input = terminal.querySelector('.command-input');
+                input.disabled = true;
+                input.placeholder = '*SYSTEM CORRUPTED*';
+                
+                ['*CRITICAL ERROR* System compromised!', 'ERR0R: PR0T0G3N.exe has st0pp3d w0rking!', 'PLEASE REFRESH TO RESTORE SYSTEMS!']
+                    .forEach((text, i) => setTimeout(() => addLine(terminals.furry.outputElement, text, true), i * 500));
+                
+                return '*FATAL ERROR* Virus detected! System compromised! >_<';
             },
         },
         chatMode: false,
